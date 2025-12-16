@@ -2,7 +2,17 @@
 
 Un bookmarklet pour exporter ton emploi du temps CELCAT en fichier `.ics` (compatible Google Calendar, Apple Calendar, Outlook).
 
-## 🚀 Installation (2 min)
+## 🌐 Installation Simple (recommandé)
+
+**Partage cette URL** : https://thomasgendron.github.io/assas-cal-exporter/
+
+1. Glisse le bouton vers ta barre de favoris
+2. Va sur [CELCAT](https://celcat-web.u-paris2.fr/calendar/) et clique sur ton favori
+3. C'est tout ! 🎉
+
+## 🚀 Installation Manuel (développeurs)
+
+Si tu veux modifier le code ou l'installer manuellement :
 
 1. **Build le bookmarklet** :
 

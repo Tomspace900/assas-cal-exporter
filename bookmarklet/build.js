@@ -127,6 +127,25 @@ async function buildBookmarklet() {
 
     console.log(`✓ Saved bookmarklet: ${bookmarkletPath}\n`);
 
+    // Step 7: Generate GitHub Pages installation page
+    console.log('Step 7: Generating installation page...');
+
+    const templatePath = path.join(__dirname, 'template.html');
+    const docsDir = path.join(__dirname, '..', 'docs');
+    const outputHtmlPath = path.join(docsDir, 'index.html');
+
+    // Ensure docs directory exists
+    if (!fs.existsSync(docsDir)) {
+      fs.mkdirSync(docsDir, { recursive: true });
+    }
+
+    // Read template and inject bookmarklet code
+    const template = fs.readFileSync(templatePath, 'utf8');
+    const finalHtml = template.replace(/BOOKMARKLET_CODE_HERE/g, bookmarkletCode);
+
+    fs.writeFileSync(outputHtmlPath, finalHtml, 'utf8');
+    console.log(`✓ Generated installation page: ${outputHtmlPath}\n`);
+
     // Summary
     console.log('===================');
     console.log('✓ Build completed successfully!');
@@ -135,6 +154,9 @@ async function buildBookmarklet() {
     console.log(`  - Bookmarklet size: ${bookmarkletCode.length} bytes`);
     console.log(`  - Compression: ${Math.round((1 - minifiedCode.length / combined.length) * 100)}%`);
     console.log('\nNext steps:');
+    console.log('1. Visit https://thomasgendron.github.io/assas-cal-exporter/');
+    console.log('2. Share this URL with your classmates!');
+    console.log('\nManual installation (alternative):');
     console.log('1. Open bookmarklet/dist/bookmarklet.txt');
     console.log('2. Copy the entire contents');
     console.log('3. Create a new bookmark and paste as the URL');
