@@ -276,7 +276,7 @@
         <div class="step">
           <p><span class="step-number">1</span><strong>Fais glisser ce bouton</strong> vers ta barre de favoris :</p>
           <div class="button-container">
-            <a href="BOOKMARKLET_CODE_HERE" class="bookmarklet-button">
+            <a href="#" id="bookmarklet-link" class="bookmarklet-button">
               📅 Export Assas Calendar
             </a>
           </div>
@@ -305,14 +305,14 @@
         <details>
           <summary>📋 Copier le code manuellement</summary>
           <p style="margin-top: 15px;">Copie ce code, puis crée un nouveau favori et colle-le comme URL :</p>
-          <textarea readonly id="bookmarklet-code">BOOKMARKLET_CODE_HERE</textarea>
+          <textarea readonly id="bookmarklet-code">BOOKMARKLET_CODE_RAW</textarea>
           <button class="copy-button" onclick="copyCode()">📋 Copier le code</button>
         </details>
       </section>
     </main>
 
     <footer>
-      <p>Créé avec ❤️ pour les étudiants d'Assas</p>
+      <p>Créé avec ❤️ pour les étudiants d'Assas par <a href="https://github.com/thomasgendron" target="_blank" style="color: #667eea; text-decoration: none; font-weight: 500;">Thomas Gendron</a></p>
       <p style="margin-top: 10px;">
         <a href="https://github.com/thomasgendron/assas-cal-exporter" target="_blank">Voir le code sur GitHub</a>
       </p>
@@ -320,6 +320,17 @@
   </div>
 
   <script>
+    // Bookmarklet code injected at build time
+    const BOOKMARKLET_CODE = 'BOOKMARKLET_CODE_ESCAPED';
+
+    // Inject bookmarklet href dynamically to avoid HTML escaping issues
+    document.addEventListener('DOMContentLoaded', function() {
+      const link = document.getElementById('bookmarklet-link');
+      if (link) {
+        link.href = BOOKMARKLET_CODE;
+      }
+    });
+
     function copyCode() {
       const textarea = document.getElementById('bookmarklet-code');
       textarea.select();

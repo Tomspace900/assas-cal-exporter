@@ -141,7 +141,20 @@ async function buildBookmarklet() {
 
     // Read template and inject bookmarklet code
     const template = fs.readFileSync(templatePath, 'utf8');
-    const finalHtml = template.replace(/BOOKMARKLET_CODE_HERE/g, bookmarkletCode);
+
+    // Escape bookmarklet code for safe injection into JavaScript string literal
+    const escapedCode = bookmarkletCode
+      .replace(/\\/g, '\\\\')   // Escape backslashes first
+      .replace(/'/g, "\\'")      // Escape single quotes
+      .replace(/\r/g, '\\r')     // Escape carriage returns
+      .replace(/\n/g, '\\n');    // Escape newlines
+
+    // Replace both placeholders:
+    // - BOOKMARKLET_CODE_ESCAPED: for JavaScript variable (escaped)
+    // - BOOKMARKLET_CODE_RAW: for textarea (raw, no escaping)
+    const finalHtml = template
+      .replace(/BOOKMARKLET_CODE_ESCAPED/g, escapedCode)
+      .replace(/BOOKMARKLET_CODE_RAW/g, bookmarkletCode);
 
     fs.writeFileSync(outputHtmlPath, finalHtml, 'utf8');
     console.log(`✓ Generated installation page: ${outputHtmlPath}\n`);

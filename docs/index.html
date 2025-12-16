@@ -1,347 +1,397 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assas Calendar Exporter - Installation</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assas Calendar Exporter - Installation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
 
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #2c3e50;
-    }
-
-    .subtitle {
-      font-size: 1.2em;
-      color: #7f8c8d;
-    }
-
-    .installation {
-      margin-bottom: 40px;
-    }
-
-    .installation h2 {
-      font-size: 1.8em;
-      margin-bottom: 30px;
-      color: #2c3e50;
-      text-align: center;
-    }
-
-    .step {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 25px;
-      border-left: 5px solid #667eea;
-    }
-
-    .step-number {
-      display: inline-block;
-      background: #667eea;
-      color: white;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 35px;
-      font-weight: bold;
-      margin-right: 10px;
-      font-size: 1.2em;
-    }
-
-    .step p {
-      margin: 10px 0;
-      font-size: 1.1em;
-    }
-
-    .step strong {
-      color: #2c3e50;
-    }
-
-    .bookmarklet-button {
-      display: inline-block;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 20px 40px;
-      font-size: 1.3em;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-      transition: all 0.3s ease;
-      cursor: grab;
-      margin: 20px 0;
-      text-align: center;
-      min-width: 280px;
-    }
-
-    .bookmarklet-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
-    }
-
-    .bookmarklet-button:active {
-      cursor: grabbing;
-      transform: translateY(-1px);
-    }
-
-    .button-container {
-      text-align: center;
-      margin: 25px 0;
-    }
-
-    .hint {
-      text-align: center;
-      font-size: 0.95em;
-      color: #7f8c8d;
-      margin-top: 10px;
-    }
-
-    .step ol {
-      margin-left: 20px;
-      margin-top: 15px;
-    }
-
-    .step li {
-      margin: 8px 0;
-      font-size: 1.05em;
-    }
-
-    .step a {
-      color: #667eea;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .step a:hover {
-      text-decoration: underline;
-    }
-
-    .help {
-      background: #fff3cd;
-      border-left: 5px solid #ffc107;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 30px;
-    }
-
-    .help h3 {
-      margin-bottom: 15px;
-      color: #856404;
-    }
-
-    .help ul {
-      margin-left: 20px;
-      margin-top: 10px;
-    }
-
-    .help li {
-      margin: 8px 0;
-    }
-
-    details {
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    summary {
-      font-weight: bold;
-      color: #856404;
-      padding: 10px;
-      background: rgba(255, 193, 7, 0.1);
-      border-radius: 6px;
-      user-select: none;
-    }
-
-    summary:hover {
-      background: rgba(255, 193, 7, 0.2);
-    }
-
-    textarea {
-      width: 100%;
-      height: 120px;
-      margin: 15px 0;
-      padding: 12px;
-      border: 2px solid #ffc107;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 0.85em;
-      resize: vertical;
-    }
-
-    .copy-button {
-      background: #ffc107;
-      color: #856404;
-      border: none;
-      padding: 12px 30px;
-      font-size: 1em;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .copy-button:hover {
-      background: #e0a800;
-      transform: translateY(-2px);
-    }
-
-    .copy-button:active {
-      transform: translateY(0);
-    }
-
-    footer {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 2px solid #e9ecef;
-      color: #7f8c8d;
-      font-size: 0.95em;
-    }
-
-    footer a {
-      color: #667eea;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
       .container {
-        padding: 25px;
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
       }
 
       h1 {
-        font-size: 2em;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: #2c3e50;
       }
 
       .subtitle {
-        font-size: 1em;
+        font-size: 1.2em;
+        color: #7f8c8d;
       }
 
-      .bookmarklet-button {
-        font-size: 1.1em;
-        padding: 18px 30px;
-        min-width: 240px;
+      .installation {
+        margin-bottom: 40px;
+      }
+
+      .installation h2 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+        color: #2c3e50;
+        text-align: center;
       }
 
       .step {
-        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 25px;
+        border-left: 5px solid #667eea;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>📅 Assas Calendar Exporter</h1>
-      <p class="subtitle">Exporte ton emploi du temps CELCAT en 2 étapes</p>
-    </header>
 
-    <main>
-      <section class="installation">
-        <h2>📥 Installation (30 secondes)</h2>
+      .step-number {
+        display: inline-block;
+        background: #667eea;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 35px;
+        font-weight: bold;
+        margin-right: 10px;
+        font-size: 1.2em;
+      }
 
-        <div class="step">
-          <p><span class="step-number">1</span><strong>Fais glisser ce bouton</strong> vers ta barre de favoris :</p>
-          <div class="button-container">
-            <a href="javascript:(function(){function e(e){return e?e.replace(/[-:]/g,"").replace("T","T"):""}function t(e){return e?e.replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"):""}function n(e){if(e.length<=75)return e;const t=[];let n=e;for(t.push(n.substring(0,75)),n=n.substring(75);n.length>0;)t.push(" "+n.substring(0,74)),n=n.substring(74);return t.join("\r\n")}function r(){const e=new Date;return`${e.getUTCFullYear()}${String(e.getUTCMonth()+1).padStart(2,"0")}${String(e.getUTCDate()).padStart(2,"0")}T${String(e.getUTCHours()).padStart(2,"0")}${String(e.getUTCMinutes()).padStart(2,"0")}${String(e.getUTCSeconds()).padStart(2,"0")}Z`}function o(e){if(!e)return"";const t={"&#233;":"é","&#232;":"è","&#234;":"ê","&#224;":"à","&#226;":"â","&#231;":"ç","&#244;":"ô","&#249;":"ù","&#251;":"û","&#239;":"ï","&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'"};let n=e;for(const[e,r]of Object.entries(t))n=n.replace(new RegExp(e,"g"),r);return n}function s(e){if(!e)return"";return{"Cours magistral":"CM","Travaux dirigés":"TD","Travaux pratiques":"TP","Conférence":"Conf","Séminaire":"Sém",Examen:"Exam"}[e]||e}function a(e){if(!e)return e;const t=e.match(/^(\d+)/);return t?t[1]:e.toUpperCase().includes("OPTION")?"OPTION":e.trim()}function parseDescription(e){if(!e)return{category:null,module:null,staff:null,group:null,room:null};let t=e.replace(/<br\s*\/?>/gi,"\n").replace(/\r\n/g,"\n").replace(/\r/g,"\n");t=o(t);const n=t.split("\n").map(e=>e.trim()).filter(e=>e.length>0),r={category:null,module:null,staff:null,group:null,room:null};if(0===n.length)return r;r.category=n[0],n.length>1&&(r.module=n[1]);const s=/^Salle\s+(.+)$/i,l=/^Groupe\s+(.+)$/i,u=/^([A-ZÀ-Ö][A-ZÀ-Ö\s-]+),\s*([A-ZÀ-Öa-zà-ö][a-zà-ö\s-]+)$/,c=/(.+?)\s*-\s*Groupe\s+(\d+)/i;for(let e=2;e<n.length;e++){const t=n[e],o=t.match(s);if(o){r.room=o[1].trim();continue}const i=t.match(c);if(i){r.staff||(r.staff=i[1].trim()),r.group||(r.group=i[2].trim());continue}const d=t.match(l);if(d){const e=a(d[1].trim());r.group=e;continue}t.match(u)?r.staff=t.trim():/^[A-ZÀ-Öa-zà-ö\s-]+$/.test(t)&&(t===t.toUpperCase()||t.length<15?r.group||(r.group=t.trim()):r.staff||(r.staff=t.trim()))}return r}function l(e,t){const n=[];return e.module&&n.push(`Module: ${e.module}`),e.staff&&n.push(`Intervenant: ${e.staff}`),e.group&&n.push(`Groupe: ${e.group}`),e.room&&n.push(`Salle: ${e.room}`),t.department&&n.push(`Département: ${t.department}`),t.modules&&t.modules.length>0&&n.push(`Code: ${t.modules.join(", ")}`),n.join("\n")}function generateIcs(e){const t=[];t.push("BEGIN:VCALENDAR"),t.push("VERSION:2.0"),t.push("PRODID:-//Assas//Calendar Exporter//EN"),t.push("CALSCALE:GREGORIAN"),t.push("METHOD:PUBLISH"),t.push("X-WR-CALNAME:Assas Calendar"),t.push("X-WR-TIMEZONE:Europe/Paris");for(const n of e){const e=u(n);t.push(e)}return t.push("END:VCALENDAR"),t.join("\r\n")}function u(o){const a=[];a.push("BEGIN:VEVENT");const u=t(o.id);a.push(n(`UID:${u}`)),a.push(`DTSTAMP:${r()}`);const c=e(o.start);a.push(`DTSTART:${c}`);const i=e(o.end);a.push(`DTEND:${i}`);const d=s(o.eventCategory)||"Cours";let p=d;o.parsed&&o.parsed.module&&(p=`${d} - ${o.parsed.module}`);const m=t(p);a.push(n(`SUMMARY:${m}`));const f=t(l(o.parsed||{},o));a.push(n(`DESCRIPTION:${f}`));let g="";if(o.parsed&&o.parsed.room?g=o.parsed.room:o.sites&&o.sites.length>0&&(g=o.sites.join(", ")),g){const e=t(g);a.push(n(`LOCATION:${e}`))}if(o.eventCategory){const e=t(o.eventCategory);a.push(n(`CATEGORIES:${e}`))}return a.push("STATUS:CONFIRMED"),a.push("TRANSP:OPAQUE"),a.push("END:VEVENT"),a.join("\r\n")}function extractStudentId(){try{const e=document.querySelector(".logInOrOut");if(e){const t=e.querySelector(".small");if(t&&t.textContent){const e=t.textContent.trim().match(/\d+/);if(e)return console.log("[Assas Exporter] Found student ID in navbar:",e[0]),e[0]}}}catch(e){console.log("[Assas Exporter] Could not extract from navbar:",e)}try{const e=document.querySelectorAll("*");for(const t of e){const e=(t.textContent||"").match(/[-\s](\d{7})/);if(e)return console.log("[Assas Exporter] Found student ID in DOM:",e[1]),e[1]}}catch(e){console.log("[Assas Exporter] Could not scan DOM:",e)}const e=window.location.href,t=e.match(/federationIds(?:%5B%5D|\[\])=([^&]+)/);if(t)return console.log("[Assas Exporter] Found student ID in query params:",t[1]),t[1];const n=e.match(/#.*federationIds(?:%5B%5D|\[\])=([^&]+)/);if(n)return console.log("[Assas Exporter] Found student ID in hash fragment:",n[1]),n[1];const r=e.match(/[?&]id=([^&]+)/);if(r)return console.log("[Assas Exporter] Found student ID in id param:",r[1]),r[1];const o=e.match(/\/student\/(\d+)/);return o?(console.log("[Assas Exporter] Found student ID in path:",o[1]),o[1]):(console.log("[Assas Exporter] Could not extract student ID automatically"),null)}function promptDateRange(){const e=new Date,t=e.getFullYear(),n=e.getMonth()+1>=9?t:t-1,r=`${n}-09-01`,o=`${n+1}-08-31`,s=new Date(r),a=new Date(o),l=`${s.getDate()} ${c(s.getMonth())} ${s.getFullYear()}`,u=`${a.getDate()} ${c(a.getMonth())} ${a.getFullYear()}`,i=prompt(`📅 DATE DE DÉBUT\n\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\nExemple : (${l}) → ${r}\nExemple : (8 juin 2025) → 2025-06-08\n\nEntre la date de début :`,r);if(!i)return null;const d=prompt(`📅 DATE DE FIN\n\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\nExemple : (${u}) → ${o}\nExemple : (31 août 2026) → 2026-08-31\n\nEntre la date de fin :`,o);return d?/^\d{4}-\d{2}-\d{2}$/.test(i)&&/^\d{4}-\d{2}-\d{2}$/.test(d)?{startDate:i,endDate:d}:(alert("❌ Format de date invalide !\n\nUtilise le format : ANNÉE-MOIS-JOUR\nExemple : 2025-09-01 pour le 1er septembre 2025"),null):null}function c(e){return["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][e]}async function i(e){const t=new URLSearchParams({"federationIds[]":e,resType:"104"});try{const e=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/LoadDisplayNames",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:t.toString(),credentials:"include"});if(!e.ok)return console.log("[Assas Exporter] Could not fetch student name"),null;const n=await e.json();if(n&&n.length>0&&n[0].displayName){const e=n[0].displayName.split(",");if(e.length>=2){const t=e[1].trim();return t.charAt(0).toUpperCase()+t.slice(1).toLowerCase()}}}catch(e){console.log("[Assas Exporter] Error fetching student name:",e)}return null}async function fetchCalendarData(e,t,n){const r=new URLSearchParams({start:t,end:n,resType:"104",calView:"agendaDay","federationIds[]":e});console.log("[Assas Exporter] Fetching calendar data...",{studentId:e,startDate:t,endDate:n});const o=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/GetCalendarData",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:r.toString(),credentials:"include"});if(!o.ok)throw new Error(`Erreur API: ${o.status} ${o.statusText}`);const s=await o.json();return console.log("[Assas Exporter] Fetched events:",s.length),s}function downloadIcsFile(e,t="assas-calendar.ics"){const n=new Blob([e],{type:"text/calendar;charset=utf-8"}),r=URL.createObjectURL(n),o=document.createElement("a");o.href=r,o.download=t,document.body.appendChild(o),o.click(),document.body.removeChild(o),setTimeout(()=>URL.revokeObjectURL(r),100),console.log("[Assas Exporter] File download triggered:",t)}function showStatus(e,t="info"){const n={info:"#2196f3",success:"#4caf50",error:"#f44336"},r=document.createElement("div");r.textContent=e,r.style.cssText=`\n    position: fixed;\n    top: 20px;\n    right: 20px;\n    padding: 15px 20px;\n    background: ${n[t]||n.info};\n    color: white;\n    border-radius: 4px;\n    z-index: 999999;\n    font-family: sans-serif;\n    font-size: 14px;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.3);\n    max-width: 300px;\n  `,document.body.appendChild(r),setTimeout(()=>{r.parentNode&&r.parentNode.removeChild(r)},3e3)}"undefined"!=typeof module&&module.exports,"undefined"!=typeof module&&module.exports,async function(){"use strict";try{console.log("[Assas Exporter] Starting calendar export..."),showStatus("Recherche de ton ID...","info");let e=extractStudentId();if(!e){if(e=prompt("🎓 ID ÉTUDIANT\n\nTon ID n'a pas pu être détecté automatiquement.\n\nOù le trouver ?\n• En haut à droite de la page CELCAT\n• À côté de \"Log Out\" (exemple: - 2401012)\n• C'est un nombre à 7 chiffres\n\nEntre ton ID étudiant :",""),!e||!e.trim())return void showStatus("Export annulé","error");e=e.trim()}console.log("[Assas Exporter] Using student ID:",e);let t=null;try{t=await i(e),t&&(console.log("[Assas Exporter] Hello",t+"!"),showStatus(`Salut ${t} ! 👋`,"success"),await new Promise(e=>setTimeout(e,1500)))}catch(e){console.log("[Assas Exporter] Could not fetch name:",e)}const n=t||"";showStatus(n?`OK ${n}, choisis tes dates...`:"Choisis tes dates...","info");const r=promptDateRange();if(!r)return void showStatus("Export annulé","error");const{startDate:o,endDate:s}=r;let a;console.log("[Assas Exporter] Date range:",o,"to",s),showStatus(n?`Récup de ton planning ${n}...`:"Récupération du planning...","info");try{a=await fetchCalendarData(e,o,s)}catch(e){return console.error("[Assas Exporter] API Error:",e),void showStatus(`Erreur API: ${e.message}`,"error")}if(!a||0===a.length)return void showStatus("Aucun événement trouvé pour cette période 🤔","error");console.log(`[Assas Exporter] Fetched ${a.length} events`),showStatus(`Analyse de ${a.length} événements...`,"info");const l=a.map(e=>({...e,parsed:parseDescription(e.description)}));let u;console.log(`[Assas Exporter] Processing ${l.length} events`),showStatus("Génération du fichier...","info");try{u=generateIcs(l)}catch(e){return console.error("[Assas Exporter] ICS Generation Error:",e),void showStatus(`Erreur: ${e.message}`,"error")}const c=`assas-calendar-${o}-${s}.ics`;downloadIcsFile(u,c);const d=l.length;showStatus(n?`C'est bon ${n} ! ${d} cours exportés 🎉`:`✓ ${d} cours exportés 🎉`,"success"),console.log("[Assas Exporter] Export completed successfully!"),console.log(`[Assas Exporter] File: ${c}`),console.log(`[Assas Exporter] Events: ${d}`)}catch(e){console.error("[Assas Exporter] Unexpected error:",e),showStatus(`Erreur: ${e.message}`,"error")}}();})();" class="bookmarklet-button">
-              📅 Export Assas Calendar
-            </a>
+      .step p {
+        margin: 10px 0;
+        font-size: 1.1em;
+      }
+
+      .step strong {
+        color: #2c3e50;
+      }
+
+      .bookmarklet-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 40px;
+        font-size: 1.3em;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s ease;
+        cursor: grab;
+        margin: 20px 0;
+        text-align: center;
+        min-width: 280px;
+      }
+
+      .bookmarklet-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+      }
+
+      .bookmarklet-button:active {
+        cursor: grabbing;
+        transform: translateY(-1px);
+      }
+
+      .button-container {
+        text-align: center;
+        margin: 25px 0;
+      }
+
+      .hint {
+        text-align: center;
+        font-size: 0.95em;
+        color: #7f8c8d;
+        margin-top: 10px;
+      }
+
+      .step ol {
+        margin-left: 20px;
+        margin-top: 15px;
+      }
+
+      .step li {
+        margin: 8px 0;
+        font-size: 1.05em;
+      }
+
+      .step a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .step a:hover {
+        text-decoration: underline;
+      }
+
+      .step a.bookmarklet-button {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .step a.bookmarklet-button:hover {
+        text-decoration: none;
+      }
+
+      .help {
+        background: #fff3cd;
+        border-left: 5px solid #ffc107;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+      }
+
+      .help h3 {
+        margin-bottom: 15px;
+        color: #856404;
+      }
+
+      .help ul {
+        margin-left: 20px;
+        margin-top: 10px;
+      }
+
+      .help li {
+        margin: 8px 0;
+      }
+
+      details {
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      summary {
+        font-weight: bold;
+        color: #856404;
+        padding: 10px;
+        background: rgba(255, 193, 7, 0.1);
+        border-radius: 6px;
+        user-select: none;
+      }
+
+      summary:hover {
+        background: rgba(255, 193, 7, 0.2);
+      }
+
+      textarea {
+        width: 100%;
+        height: 120px;
+        margin: 15px 0;
+        padding: 12px;
+        border: 2px solid #ffc107;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 0.85em;
+        resize: vertical;
+      }
+
+      .copy-button {
+        background: #ffc107;
+        color: #856404;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1em;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .copy-button:hover {
+        background: #e0a800;
+        transform: translateY(-2px);
+      }
+
+      .copy-button:active {
+        transform: translateY(0);
+      }
+
+      footer {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 2px solid #e9ecef;
+        color: #7f8c8d;
+        font-size: 0.95em;
+      }
+
+      footer a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 25px;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .subtitle {
+          font-size: 1em;
+        }
+
+        .bookmarklet-button {
+          font-size: 1.1em;
+          padding: 18px 30px;
+          min-width: 240px;
+        }
+
+        .step {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📅 Assas Calendar Exporter</h1>
+        <p class="subtitle">Exporte ton emploi du temps Assas en 2 étapes</p>
+      </header>
+
+      <main>
+        <section class="installation">
+          <h2>📥 Installation (30 secondes)</h2>
+
+          <div class="step">
+            <p>
+              <span class="step-number">1</span><strong>Fais glisser ce bouton</strong> vers ta
+              barre de favoris :
+            </p>
+            <div class="button-container">
+              <a href="#" id="bookmarklet-link" class="bookmarklet-button">
+                📅 Export Assas Calendar
+              </a>
+            </div>
+            <p class="hint">👆 Clique et glisse vers le haut de ton navigateur</p>
           </div>
-          <p class="hint">👆 Clique et glisse vers le haut de ton navigateur</p>
-        </div>
 
-        <div class="step">
-          <p><span class="step-number">2</span><strong>Utilise-le sur CELCAT</strong></p>
-          <ol>
-            <li>Va sur <a href="https://celcat-web.u-paris2.fr/calendar/" target="_blank">CELCAT</a> et connecte-toi</li>
-            <li>Clique sur ton favori "📅 Export Assas Calendar"</li>
-            <li>Suis les instructions et télécharge ton fichier .ics</li>
-            <li>Importe-le dans Google Calendar, Apple Calendar ou Outlook</li>
-          </ol>
-        </div>
-      </section>
+          <div class="step">
+            <p><span class="step-number">2</span><strong>Utilise-le sur Assas</strong></p>
+            <ol>
+              <li>
+                Va sur
+                <a href="https://celcat-web.u-paris2.fr/calendar/" target="_blank"
+                  >ton calendrier</a
+                >
+                et connecte-toi
+              </li>
+              <li>Clique sur ton favori "📅 Export Assas Calendar"</li>
+              <li>Suis les instructions et télécharge ton fichier .ics</li>
+              <li>Importe-le dans Google Calendar, Apple Calendar ou Outlook</li>
+            </ol>
+          </div>
+        </section>
 
-      <section class="help">
-        <h3>❓ Le glisser-déposer ne marche pas ?</h3>
-        <p>Pas de panique ! Voici des alternatives :</p>
-        <ul>
-          <li><strong>Méthode 1</strong> : Fais un clic droit sur le bouton → "Ajouter aux favoris"</li>
-          <li><strong>Méthode 2</strong> : Copie le code manuellement (voir ci-dessous)</li>
-        </ul>
+        <section class="help">
+          <h3>❓ Le glisser-déposer ne marche pas ?</h3>
+          <p>Pas de panique ! Voici des alternatives :</p>
+          <ul>
+            <li>
+              <strong>Méthode 1</strong> : Fais un clic droit sur le bouton → "Ajouter aux favoris"
+            </li>
+            <li><strong>Méthode 2</strong> : Copie le code manuellement (voir ci-dessous)</li>
+          </ul>
 
-        <details>
-          <summary>📋 Copier le code manuellement</summary>
-          <p style="margin-top: 15px;">Copie ce code, puis crée un nouveau favori et colle-le comme URL :</p>
-          <textarea readonly id="bookmarklet-code">javascript:(function(){function e(e){return e?e.replace(/[-:]/g,"").replace("T","T"):""}function t(e){return e?e.replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"):""}function n(e){if(e.length<=75)return e;const t=[];let n=e;for(t.push(n.substring(0,75)),n=n.substring(75);n.length>0;)t.push(" "+n.substring(0,74)),n=n.substring(74);return t.join("\r\n")}function r(){const e=new Date;return`${e.getUTCFullYear()}${String(e.getUTCMonth()+1).padStart(2,"0")}${String(e.getUTCDate()).padStart(2,"0")}T${String(e.getUTCHours()).padStart(2,"0")}${String(e.getUTCMinutes()).padStart(2,"0")}${String(e.getUTCSeconds()).padStart(2,"0")}Z`}function o(e){if(!e)return"";const t={"&#233;":"é","&#232;":"è","&#234;":"ê","&#224;":"à","&#226;":"â","&#231;":"ç","&#244;":"ô","&#249;":"ù","&#251;":"û","&#239;":"ï","&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'"};let n=e;for(const[e,r]of Object.entries(t))n=n.replace(new RegExp(e,"g"),r);return n}function s(e){if(!e)return"";return{"Cours magistral":"CM","Travaux dirigés":"TD","Travaux pratiques":"TP","Conférence":"Conf","Séminaire":"Sém",Examen:"Exam"}[e]||e}function a(e){if(!e)return e;const t=e.match(/^(\d+)/);return t?t[1]:e.toUpperCase().includes("OPTION")?"OPTION":e.trim()}function parseDescription(e){if(!e)return{category:null,module:null,staff:null,group:null,room:null};let t=e.replace(/<br\s*\/?>/gi,"\n").replace(/\r\n/g,"\n").replace(/\r/g,"\n");t=o(t);const n=t.split("\n").map(e=>e.trim()).filter(e=>e.length>0),r={category:null,module:null,staff:null,group:null,room:null};if(0===n.length)return r;r.category=n[0],n.length>1&&(r.module=n[1]);const s=/^Salle\s+(.+)$/i,l=/^Groupe\s+(.+)$/i,u=/^([A-ZÀ-Ö][A-ZÀ-Ö\s-]+),\s*([A-ZÀ-Öa-zà-ö][a-zà-ö\s-]+)$/,c=/(.+?)\s*-\s*Groupe\s+(\d+)/i;for(let e=2;e<n.length;e++){const t=n[e],o=t.match(s);if(o){r.room=o[1].trim();continue}const i=t.match(c);if(i){r.staff||(r.staff=i[1].trim()),r.group||(r.group=i[2].trim());continue}const d=t.match(l);if(d){const e=a(d[1].trim());r.group=e;continue}t.match(u)?r.staff=t.trim():/^[A-ZÀ-Öa-zà-ö\s-]+$/.test(t)&&(t===t.toUpperCase()||t.length<15?r.group||(r.group=t.trim()):r.staff||(r.staff=t.trim()))}return r}function l(e,t){const n=[];return e.module&&n.push(`Module: ${e.module}`),e.staff&&n.push(`Intervenant: ${e.staff}`),e.group&&n.push(`Groupe: ${e.group}`),e.room&&n.push(`Salle: ${e.room}`),t.department&&n.push(`Département: ${t.department}`),t.modules&&t.modules.length>0&&n.push(`Code: ${t.modules.join(", ")}`),n.join("\n")}function generateIcs(e){const t=[];t.push("BEGIN:VCALENDAR"),t.push("VERSION:2.0"),t.push("PRODID:-//Assas//Calendar Exporter//EN"),t.push("CALSCALE:GREGORIAN"),t.push("METHOD:PUBLISH"),t.push("X-WR-CALNAME:Assas Calendar"),t.push("X-WR-TIMEZONE:Europe/Paris");for(const n of e){const e=u(n);t.push(e)}return t.push("END:VCALENDAR"),t.join("\r\n")}function u(o){const a=[];a.push("BEGIN:VEVENT");const u=t(o.id);a.push(n(`UID:${u}`)),a.push(`DTSTAMP:${r()}`);const c=e(o.start);a.push(`DTSTART:${c}`);const i=e(o.end);a.push(`DTEND:${i}`);const d=s(o.eventCategory)||"Cours";let p=d;o.parsed&&o.parsed.module&&(p=`${d} - ${o.parsed.module}`);const m=t(p);a.push(n(`SUMMARY:${m}`));const f=t(l(o.parsed||{},o));a.push(n(`DESCRIPTION:${f}`));let g="";if(o.parsed&&o.parsed.room?g=o.parsed.room:o.sites&&o.sites.length>0&&(g=o.sites.join(", ")),g){const e=t(g);a.push(n(`LOCATION:${e}`))}if(o.eventCategory){const e=t(o.eventCategory);a.push(n(`CATEGORIES:${e}`))}return a.push("STATUS:CONFIRMED"),a.push("TRANSP:OPAQUE"),a.push("END:VEVENT"),a.join("\r\n")}function extractStudentId(){try{const e=document.querySelector(".logInOrOut");if(e){const t=e.querySelector(".small");if(t&&t.textContent){const e=t.textContent.trim().match(/\d+/);if(e)return console.log("[Assas Exporter] Found student ID in navbar:",e[0]),e[0]}}}catch(e){console.log("[Assas Exporter] Could not extract from navbar:",e)}try{const e=document.querySelectorAll("*");for(const t of e){const e=(t.textContent||"").match(/[-\s](\d{7})/);if(e)return console.log("[Assas Exporter] Found student ID in DOM:",e[1]),e[1]}}catch(e){console.log("[Assas Exporter] Could not scan DOM:",e)}const e=window.location.href,t=e.match(/federationIds(?:%5B%5D|\[\])=([^&]+)/);if(t)return console.log("[Assas Exporter] Found student ID in query params:",t[1]),t[1];const n=e.match(/#.*federationIds(?:%5B%5D|\[\])=([^&]+)/);if(n)return console.log("[Assas Exporter] Found student ID in hash fragment:",n[1]),n[1];const r=e.match(/[?&]id=([^&]+)/);if(r)return console.log("[Assas Exporter] Found student ID in id param:",r[1]),r[1];const o=e.match(/\/student\/(\d+)/);return o?(console.log("[Assas Exporter] Found student ID in path:",o[1]),o[1]):(console.log("[Assas Exporter] Could not extract student ID automatically"),null)}function promptDateRange(){const e=new Date,t=e.getFullYear(),n=e.getMonth()+1>=9?t:t-1,r=`${n}-09-01`,o=`${n+1}-08-31`,s=new Date(r),a=new Date(o),l=`${s.getDate()} ${c(s.getMonth())} ${s.getFullYear()}`,u=`${a.getDate()} ${c(a.getMonth())} ${a.getFullYear()}`,i=prompt(`📅 DATE DE DÉBUT\n\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\nExemple : (${l}) → ${r}\nExemple : (8 juin 2025) → 2025-06-08\n\nEntre la date de début :`,r);if(!i)return null;const d=prompt(`📅 DATE DE FIN\n\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\nExemple : (${u}) → ${o}\nExemple : (31 août 2026) → 2026-08-31\n\nEntre la date de fin :`,o);return d?/^\d{4}-\d{2}-\d{2}$/.test(i)&&/^\d{4}-\d{2}-\d{2}$/.test(d)?{startDate:i,endDate:d}:(alert("❌ Format de date invalide !\n\nUtilise le format : ANNÉE-MOIS-JOUR\nExemple : 2025-09-01 pour le 1er septembre 2025"),null):null}function c(e){return["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][e]}async function i(e){const t=new URLSearchParams({"federationIds[]":e,resType:"104"});try{const e=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/LoadDisplayNames",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:t.toString(),credentials:"include"});if(!e.ok)return console.log("[Assas Exporter] Could not fetch student name"),null;const n=await e.json();if(n&&n.length>0&&n[0].displayName){const e=n[0].displayName.split(",");if(e.length>=2){const t=e[1].trim();return t.charAt(0).toUpperCase()+t.slice(1).toLowerCase()}}}catch(e){console.log("[Assas Exporter] Error fetching student name:",e)}return null}async function fetchCalendarData(e,t,n){const r=new URLSearchParams({start:t,end:n,resType:"104",calView:"agendaDay","federationIds[]":e});console.log("[Assas Exporter] Fetching calendar data...",{studentId:e,startDate:t,endDate:n});const o=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/GetCalendarData",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:r.toString(),credentials:"include"});if(!o.ok)throw new Error(`Erreur API: ${o.status} ${o.statusText}`);const s=await o.json();return console.log("[Assas Exporter] Fetched events:",s.length),s}function downloadIcsFile(e,t="assas-calendar.ics"){const n=new Blob([e],{type:"text/calendar;charset=utf-8"}),r=URL.createObjectURL(n),o=document.createElement("a");o.href=r,o.download=t,document.body.appendChild(o),o.click(),document.body.removeChild(o),setTimeout(()=>URL.revokeObjectURL(r),100),console.log("[Assas Exporter] File download triggered:",t)}function showStatus(e,t="info"){const n={info:"#2196f3",success:"#4caf50",error:"#f44336"},r=document.createElement("div");r.textContent=e,r.style.cssText=`\n    position: fixed;\n    top: 20px;\n    right: 20px;\n    padding: 15px 20px;\n    background: ${n[t]||n.info};\n    color: white;\n    border-radius: 4px;\n    z-index: 999999;\n    font-family: sans-serif;\n    font-size: 14px;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.3);\n    max-width: 300px;\n  `,document.body.appendChild(r),setTimeout(()=>{r.parentNode&&r.parentNode.removeChild(r)},3e3)}"undefined"!=typeof module&&module.exports,"undefined"!=typeof module&&module.exports,async function(){"use strict";try{console.log("[Assas Exporter] Starting calendar export..."),showStatus("Recherche de ton ID...","info");let e=extractStudentId();if(!e){if(e=prompt("🎓 ID ÉTUDIANT\n\nTon ID n'a pas pu être détecté automatiquement.\n\nOù le trouver ?\n• En haut à droite de la page CELCAT\n• À côté de \"Log Out\" (exemple: - 2401012)\n• C'est un nombre à 7 chiffres\n\nEntre ton ID étudiant :",""),!e||!e.trim())return void showStatus("Export annulé","error");e=e.trim()}console.log("[Assas Exporter] Using student ID:",e);let t=null;try{t=await i(e),t&&(console.log("[Assas Exporter] Hello",t+"!"),showStatus(`Salut ${t} ! 👋`,"success"),await new Promise(e=>setTimeout(e,1500)))}catch(e){console.log("[Assas Exporter] Could not fetch name:",e)}const n=t||"";showStatus(n?`OK ${n}, choisis tes dates...`:"Choisis tes dates...","info");const r=promptDateRange();if(!r)return void showStatus("Export annulé","error");const{startDate:o,endDate:s}=r;let a;console.log("[Assas Exporter] Date range:",o,"to",s),showStatus(n?`Récup de ton planning ${n}...`:"Récupération du planning...","info");try{a=await fetchCalendarData(e,o,s)}catch(e){return console.error("[Assas Exporter] API Error:",e),void showStatus(`Erreur API: ${e.message}`,"error")}if(!a||0===a.length)return void showStatus("Aucun événement trouvé pour cette période 🤔","error");console.log(`[Assas Exporter] Fetched ${a.length} events`),showStatus(`Analyse de ${a.length} événements...`,"info");const l=a.map(e=>({...e,parsed:parseDescription(e.description)}));let u;console.log(`[Assas Exporter] Processing ${l.length} events`),showStatus("Génération du fichier...","info");try{u=generateIcs(l)}catch(e){return console.error("[Assas Exporter] ICS Generation Error:",e),void showStatus(`Erreur: ${e.message}`,"error")}const c=`assas-calendar-${o}-${s}.ics`;downloadIcsFile(u,c);const d=l.length;showStatus(n?`C'est bon ${n} ! ${d} cours exportés 🎉`:`✓ ${d} cours exportés 🎉`,"success"),console.log("[Assas Exporter] Export completed successfully!"),console.log(`[Assas Exporter] File: ${c}`),console.log(`[Assas Exporter] Events: ${d}`)}catch(e){console.error("[Assas Exporter] Unexpected error:",e),showStatus(`Erreur: ${e.message}`,"error")}}();})();</textarea>
-          <button class="copy-button" onclick="copyCode()">📋 Copier le code</button>
-        </details>
-      </section>
-    </main>
+          <details>
+            <summary>📋 Copier le code manuellement</summary>
+            <p style="margin-top: 15px">
+              Copie ce code, puis crée un nouveau favori et colle-le comme URL :
+            </p>
+            <textarea readonly id="bookmarklet-code">
+javascript:(function(){function e(e){return e?e.replace(/[-:]/g,"").replace("T","T"):""}function t(e){return e?e.replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"):""}function n(e){if(e.length<=75)return e;const t=[];let n=e;for(t.push(n.substring(0,75)),n=n.substring(75);n.length>0;)t.push(" "+n.substring(0,74)),n=n.substring(74);return t.join("\r\n")}function r(){const e=new Date;return`${e.getUTCFullYear()}${String(e.getUTCMonth()+1).padStart(2,"0")}${String(e.getUTCDate()).padStart(2,"0")}T${String(e.getUTCHours()).padStart(2,"0")}${String(e.getUTCMinutes()).padStart(2,"0")}${String(e.getUTCSeconds()).padStart(2,"0")}Z`}function o(e){if(!e)return"";const t={"&#233;":"é","&#232;":"è","&#234;":"ê","&#224;":"à","&#226;":"â","&#231;":"ç","&#244;":"ô","&#249;":"ù","&#251;":"û","&#239;":"ï","&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'"};let n=e;for(const[e,r]of Object.entries(t))n=n.replace(new RegExp(e,"g"),r);return n}function s(e){if(!e)return"";return{"Cours magistral":"CM","Travaux dirigés":"TD","Travaux pratiques":"TP","Conférence":"Conf","Séminaire":"Sém",Examen:"Exam"}[e]||e}function a(e){if(!e)return e;const t=e.match(/^(\d+)/);return t?t[1]:e.toUpperCase().includes("OPTION")?"OPTION":e.trim()}function parseDescription(e){if(!e)return{category:null,module:null,staff:null,group:null,room:null};let t=e.replace(/<br\s*\/?>/gi,"\n").replace(/\r\n/g,"\n").replace(/\r/g,"\n");t=o(t);const n=t.split("\n").map(e=>e.trim()).filter(e=>e.length>0),r={category:null,module:null,staff:null,group:null,room:null};if(0===n.length)return r;r.category=n[0],n.length>1&&(r.module=n[1]);const s=/^Salle\s+(.+)$/i,l=/^Groupe\s+(.+)$/i,u=/^([A-ZÀ-Ö][A-ZÀ-Ö\s-]+),\s*([A-ZÀ-Öa-zà-ö][a-zà-ö\s-]+)$/,c=/(.+?)\s*-\s*Groupe\s+(\d+)/i;for(let e=2;e<n.length;e++){const t=n[e],o=t.match(s);if(o){r.room=o[1].trim();continue}const i=t.match(c);if(i){r.staff||(r.staff=i[1].trim()),r.group||(r.group=i[2].trim());continue}const d=t.match(l);if(d){const e=a(d[1].trim());r.group=e;continue}t.match(u)?r.staff=t.trim():/^[A-ZÀ-Öa-zà-ö\s-]+$/.test(t)&&(t===t.toUpperCase()||t.length<15?r.group||(r.group=t.trim()):r.staff||(r.staff=t.trim()))}return r}function l(e,t){const n=[];return e.module&&n.push(`Module: ${e.module}`),e.staff&&n.push(`Intervenant: ${e.staff}`),e.group&&n.push(`Groupe: ${e.group}`),e.room&&n.push(`Salle: ${e.room}`),t.department&&n.push(`Département: ${t.department}`),t.modules&&t.modules.length>0&&n.push(`Code: ${t.modules.join(", ")}`),n.join("\n")}function generateIcs(e){const t=[];t.push("BEGIN:VCALENDAR"),t.push("VERSION:2.0"),t.push("PRODID:-//Assas//Calendar Exporter//EN"),t.push("CALSCALE:GREGORIAN"),t.push("METHOD:PUBLISH"),t.push("X-WR-CALNAME:Assas Calendar"),t.push("X-WR-TIMEZONE:Europe/Paris");for(const n of e){const e=u(n);t.push(e)}return t.push("END:VCALENDAR"),t.join("\r\n")}function u(o){const a=[];a.push("BEGIN:VEVENT");const u=t(o.id);a.push(n(`UID:${u}`)),a.push(`DTSTAMP:${r()}`);const c=e(o.start);a.push(`DTSTART:${c}`);const i=e(o.end);a.push(`DTEND:${i}`);const d=s(o.eventCategory)||"Cours";let p=d;o.parsed&&o.parsed.module&&(p=`${d} - ${o.parsed.module}`);const m=t(p);a.push(n(`SUMMARY:${m}`));const f=t(l(o.parsed||{},o));a.push(n(`DESCRIPTION:${f}`));let g="";if(o.parsed&&o.parsed.room?g=o.parsed.room:o.sites&&o.sites.length>0&&(g=o.sites.join(", ")),g){const e=t(g);a.push(n(`LOCATION:${e}`))}if(o.eventCategory){const e=t(o.eventCategory);a.push(n(`CATEGORIES:${e}`))}return a.push("STATUS:CONFIRMED"),a.push("TRANSP:OPAQUE"),a.push("END:VEVENT"),a.join("\r\n")}function extractStudentId(){try{const e=document.querySelector(".logInOrOut");if(e){const t=e.querySelector(".small");if(t&&t.textContent){const e=t.textContent.trim().match(/\d+/);if(e)return console.log("[Assas Exporter] Found student ID in navbar:",e[0]),e[0]}}}catch(e){console.log("[Assas Exporter] Could not extract from navbar:",e)}try{const e=document.querySelectorAll("*");for(const t of e){const e=(t.textContent||"").match(/[-\s](\d{7})/);if(e)return console.log("[Assas Exporter] Found student ID in DOM:",e[1]),e[1]}}catch(e){console.log("[Assas Exporter] Could not scan DOM:",e)}const e=window.location.href,t=e.match(/federationIds(?:%5B%5D|\[\])=([^&]+)/);if(t)return console.log("[Assas Exporter] Found student ID in query params:",t[1]),t[1];const n=e.match(/#.*federationIds(?:%5B%5D|\[\])=([^&]+)/);if(n)return console.log("[Assas Exporter] Found student ID in hash fragment:",n[1]),n[1];const r=e.match(/[?&]id=([^&]+)/);if(r)return console.log("[Assas Exporter] Found student ID in id param:",r[1]),r[1];const o=e.match(/\/student\/(\d+)/);return o?(console.log("[Assas Exporter] Found student ID in path:",o[1]),o[1]):(console.log("[Assas Exporter] Could not extract student ID automatically"),null)}function promptDateRange(){const e=new Date,t=e.getFullYear(),n=e.getMonth()+1>=9?t:t-1,r=`${n}-09-01`,o=`${n+1}-08-31`,s=new Date(r),a=new Date(o),l=`${s.getDate()} ${c(s.getMonth())} ${s.getFullYear()}`,u=`${a.getDate()} ${c(a.getMonth())} ${a.getFullYear()}`,i=prompt(`📅 DATE DE DÉBUT\n\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\nExemple : (${l}) → ${r}\nExemple : (8 juin 2025) → 2025-06-08\n\nEntre la date de début :`,r);if(!i)return null;const d=prompt(`📅 DATE DE FIN\n\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\nExemple : (${u}) → ${o}\nExemple : (31 août 2026) → 2026-08-31\n\nEntre la date de fin :`,o);return d?/^\d{4}-\d{2}-\d{2}$/.test(i)&&/^\d{4}-\d{2}-\d{2}$/.test(d)?{startDate:i,endDate:d}:(alert("❌ Format de date invalide !\n\nUtilise le format : ANNÉE-MOIS-JOUR\nExemple : 2025-09-01 pour le 1er septembre 2025"),null):null}function c(e){return["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][e]}async function i(e){const t=new URLSearchParams({"federationIds[]":e,resType:"104"});try{const e=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/LoadDisplayNames",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:t.toString(),credentials:"include"});if(!e.ok)return console.log("[Assas Exporter] Could not fetch student name"),null;const n=await e.json();if(n&&n.length>0&&n[0].displayName){const e=n[0].displayName.split(",");if(e.length>=2){const t=e[1].trim();return t.charAt(0).toUpperCase()+t.slice(1).toLowerCase()}}}catch(e){console.log("[Assas Exporter] Error fetching student name:",e)}return null}async function fetchCalendarData(e,t,n){const r=new URLSearchParams({start:t,end:n,resType:"104",calView:"agendaDay","federationIds[]":e});console.log("[Assas Exporter] Fetching calendar data...",{studentId:e,startDate:t,endDate:n});const o=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/GetCalendarData",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:r.toString(),credentials:"include"});if(!o.ok)throw new Error(`Erreur API: ${o.status} ${o.statusText}`);const s=await o.json();return console.log("[Assas Exporter] Fetched events:",s.length),s}function downloadIcsFile(e,t="assas-calendar.ics"){const n=new Blob([e],{type:"text/calendar;charset=utf-8"}),r=URL.createObjectURL(n),o=document.createElement("a");o.href=r,o.download=t,document.body.appendChild(o),o.click(),document.body.removeChild(o),setTimeout(()=>URL.revokeObjectURL(r),100),console.log("[Assas Exporter] File download triggered:",t)}function showStatus(e,t="info"){const n={info:"#2196f3",success:"#4caf50",error:"#f44336"},r=document.createElement("div");r.textContent=e,r.style.cssText=`\n    position: fixed;\n    top: 20px;\n    right: 20px;\n    padding: 15px 20px;\n    background: ${n[t]||n.info};\n    color: white;\n    border-radius: 4px;\n    z-index: 999999;\n    font-family: sans-serif;\n    font-size: 14px;\n    box-shadow: 0 2px 8px rgba(0,0,0,0.3);\n    max-width: 300px;\n  `,document.body.appendChild(r),setTimeout(()=>{r.parentNode&&r.parentNode.removeChild(r)},3e3)}"undefined"!=typeof module&&module.exports,"undefined"!=typeof module&&module.exports,async function(){"use strict";try{console.log("[Assas Exporter] Starting calendar export..."),showStatus("Recherche de ton ID...","info");let e=extractStudentId();if(!e){if(e=prompt("🎓 ID ÉTUDIANT\n\nTon ID n'a pas pu être détecté automatiquement.\n\nOù le trouver ?\n• En haut à droite de la page CELCAT\n• À côté de \"Log Out\" (exemple: - 2401012)\n• C'est un nombre à 7 chiffres\n\nEntre ton ID étudiant :",""),!e||!e.trim())return void showStatus("Export annulé","error");e=e.trim()}console.log("[Assas Exporter] Using student ID:",e);let t=null;try{t=await i(e),t&&(console.log("[Assas Exporter] Hello",t+"!"),showStatus(`Salut ${t} ! 👋`,"success"),await new Promise(e=>setTimeout(e,1500)))}catch(e){console.log("[Assas Exporter] Could not fetch name:",e)}const n=t||"";showStatus(n?`OK ${n}, choisis tes dates...`:"Choisis tes dates...","info");const r=promptDateRange();if(!r)return void showStatus("Export annulé","error");const{startDate:o,endDate:s}=r;let a;console.log("[Assas Exporter] Date range:",o,"to",s),showStatus(n?`Récup de ton planning ${n}...`:"Récupération du planning...","info");try{a=await fetchCalendarData(e,o,s)}catch(e){return console.error("[Assas Exporter] API Error:",e),void showStatus(`Erreur API: ${e.message}`,"error")}if(!a||0===a.length)return void showStatus("Aucun événement trouvé pour cette période 🤔","error");console.log(`[Assas Exporter] Fetched ${a.length} events`),showStatus(`Analyse de ${a.length} événements...`,"info");const l=a.map(e=>({...e,parsed:parseDescription(e.description)}));let u;console.log(`[Assas Exporter] Processing ${l.length} events`),showStatus("Génération du fichier...","info");try{u=generateIcs(l)}catch(e){return console.error("[Assas Exporter] ICS Generation Error:",e),void showStatus(`Erreur: ${e.message}`,"error")}const c=`assas-calendar-${o}-${s}.ics`;downloadIcsFile(u,c);const d=l.length;showStatus(n?`C'est bon ${n} ! ${d} cours exportés 🎉`:`✓ ${d} cours exportés 🎉`,"success"),console.log("[Assas Exporter] Export completed successfully!"),console.log(`[Assas Exporter] File: ${c}`),console.log(`[Assas Exporter] Events: ${d}`)}catch(e){console.error("[Assas Exporter] Unexpected error:",e),showStatus(`Erreur: ${e.message}`,"error")}}();})();</textarea
+            >
+            <button class="copy-button" onclick="copyCode()">📋 Copier le code</button>
+          </details>
+        </section>
+      </main>
 
-    <footer>
-      <p>Créé avec ❤️ pour les étudiants d'Assas</p>
-      <p style="margin-top: 10px;">
-        <a href="https://github.com/thomasgendron/assas-cal-exporter" target="_blank">Voir le code sur GitHub</a>
-      </p>
-    </footer>
-  </div>
+      <footer>
+        <p>
+          Créé avec ❤️ pour les étudiants d'Assas par
+          <a
+            href="https://github.com/tomspace900"
+            target="_blank"
+            style="color: #667eea; text-decoration: none; font-weight: 500"
+            >Thomas Gendron</a
+          >
+        </p>
+        <p style="margin-top: 10px">
+          <a href="https://github.com/tomspace900/assas-cal-exporter" target="_blank"
+            >Voir le code sur GitHub</a
+          >
+        </p>
+      </footer>
+    </div>
 
-  <script>
-    function copyCode() {
-      const textarea = document.getElementById('bookmarklet-code');
-      textarea.select();
-      textarea.setSelectionRange(0, 99999); // Pour mobile
+    <script>
+      // Bookmarklet code injected at build time
+      const BOOKMARKLET_CODE =
+        'javascript:(function(){function e(e){return e?e.replace(/[-:]/g,"").replace("T","T"):""}function t(e){return e?e.replace(/\\\\/g,"\\\\\\\\").replace(/;/g,"\\\\;").replace(/,/g,"\\\\,").replace(/\\n/g,"\\\\n"):""}function n(e){if(e.length<=75)return e;const t=[];let n=e;for(t.push(n.substring(0,75)),n=n.substring(75);n.length>0;)t.push(" "+n.substring(0,74)),n=n.substring(74);return t.join("\\r\\n")}function r(){const e=new Date;return`${e.getUTCFullYear()}${String(e.getUTCMonth()+1).padStart(2,"0")}${String(e.getUTCDate()).padStart(2,"0")}T${String(e.getUTCHours()).padStart(2,"0")}${String(e.getUTCMinutes()).padStart(2,"0")}${String(e.getUTCSeconds()).padStart(2,"0")}Z`}function o(e){if(!e)return"";const t={"&#233;":"é","&#232;":"è","&#234;":"ê","&#224;":"à","&#226;":"â","&#231;":"ç","&#244;":"ô","&#249;":"ù","&#251;":"û","&#239;":"ï","&amp;":"&","&lt;":"<","&gt;":">","&quot;":\'"\',"&#39;":"\'"};let n=e;for(const[e,r]of Object.entries(t))n=n.replace(new RegExp(e,"g"),r);return n}function s(e){if(!e)return"";return{"Cours magistral":"CM","Travaux dirigés":"TD","Travaux pratiques":"TP","Conférence":"Conf","Séminaire":"Sém",Examen:"Exam"}[e]||e}function a(e){if(!e)return e;const t=e.match(/^(\\d+)/);return t?t[1]:e.toUpperCase().includes("OPTION")?"OPTION":e.trim()}function parseDescription(e){if(!e)return{category:null,module:null,staff:null,group:null,room:null};let t=e.replace(/<br\\s*\\/?>/gi,"\\n").replace(/\\r\\n/g,"\\n").replace(/\\r/g,"\\n");t=o(t);const n=t.split("\\n").map(e=>e.trim()).filter(e=>e.length>0),r={category:null,module:null,staff:null,group:null,room:null};if(0===n.length)return r;r.category=n[0],n.length>1&&(r.module=n[1]);const s=/^Salle\\s+(.+)$/i,l=/^Groupe\\s+(.+)$/i,u=/^([A-ZÀ-Ö][A-ZÀ-Ö\\s-]+),\\s*([A-ZÀ-Öa-zà-ö][a-zà-ö\\s-]+)$/,c=/(.+?)\\s*-\\s*Groupe\\s+(\\d+)/i;for(let e=2;e<n.length;e++){const t=n[e],o=t.match(s);if(o){r.room=o[1].trim();continue}const i=t.match(c);if(i){r.staff||(r.staff=i[1].trim()),r.group||(r.group=i[2].trim());continue}const d=t.match(l);if(d){const e=a(d[1].trim());r.group=e;continue}t.match(u)?r.staff=t.trim():/^[A-ZÀ-Öa-zà-ö\\s-]+$/.test(t)&&(t===t.toUpperCase()||t.length<15?r.group||(r.group=t.trim()):r.staff||(r.staff=t.trim()))}return r}function l(e,t){const n=[];return e.module&&n.push(`Module: ${e.module}`),e.staff&&n.push(`Intervenant: ${e.staff}`),e.group&&n.push(`Groupe: ${e.group}`),e.room&&n.push(`Salle: ${e.room}`),t.department&&n.push(`Département: ${t.department}`),t.modules&&t.modules.length>0&&n.push(`Code: ${t.modules.join(", ")}`),n.join("\\n")}function generateIcs(e){const t=[];t.push("BEGIN:VCALENDAR"),t.push("VERSION:2.0"),t.push("PRODID:-//Assas//Calendar Exporter//EN"),t.push("CALSCALE:GREGORIAN"),t.push("METHOD:PUBLISH"),t.push("X-WR-CALNAME:Assas Calendar"),t.push("X-WR-TIMEZONE:Europe/Paris");for(const n of e){const e=u(n);t.push(e)}return t.push("END:VCALENDAR"),t.join("\\r\\n")}function u(o){const a=[];a.push("BEGIN:VEVENT");const u=t(o.id);a.push(n(`UID:${u}`)),a.push(`DTSTAMP:${r()}`);const c=e(o.start);a.push(`DTSTART:${c}`);const i=e(o.end);a.push(`DTEND:${i}`);const d=s(o.eventCategory)||"Cours";let p=d;o.parsed&&o.parsed.module&&(p=`${d} - ${o.parsed.module}`);const m=t(p);a.push(n(`SUMMARY:${m}`));const f=t(l(o.parsed||{},o));a.push(n(`DESCRIPTION:${f}`));let g="";if(o.parsed&&o.parsed.room?g=o.parsed.room:o.sites&&o.sites.length>0&&(g=o.sites.join(", ")),g){const e=t(g);a.push(n(`LOCATION:${e}`))}if(o.eventCategory){const e=t(o.eventCategory);a.push(n(`CATEGORIES:${e}`))}return a.push("STATUS:CONFIRMED"),a.push("TRANSP:OPAQUE"),a.push("END:VEVENT"),a.join("\\r\\n")}function extractStudentId(){try{const e=document.querySelector(".logInOrOut");if(e){const t=e.querySelector(".small");if(t&&t.textContent){const e=t.textContent.trim().match(/\\d+/);if(e)return console.log("[Assas Exporter] Found student ID in navbar:",e[0]),e[0]}}}catch(e){console.log("[Assas Exporter] Could not extract from navbar:",e)}try{const e=document.querySelectorAll("*");for(const t of e){const e=(t.textContent||"").match(/[-\\s](\\d{7})/);if(e)return console.log("[Assas Exporter] Found student ID in DOM:",e[1]),e[1]}}catch(e){console.log("[Assas Exporter] Could not scan DOM:",e)}const e=window.location.href,t=e.match(/federationIds(?:%5B%5D|\\[\\])=([^&]+)/);if(t)return console.log("[Assas Exporter] Found student ID in query params:",t[1]),t[1];const n=e.match(/#.*federationIds(?:%5B%5D|\\[\\])=([^&]+)/);if(n)return console.log("[Assas Exporter] Found student ID in hash fragment:",n[1]),n[1];const r=e.match(/[?&]id=([^&]+)/);if(r)return console.log("[Assas Exporter] Found student ID in id param:",r[1]),r[1];const o=e.match(/\\/student\\/(\\d+)/);return o?(console.log("[Assas Exporter] Found student ID in path:",o[1]),o[1]):(console.log("[Assas Exporter] Could not extract student ID automatically"),null)}function promptDateRange(){const e=new Date,t=e.getFullYear(),n=e.getMonth()+1>=9?t:t-1,r=`${n}-09-01`,o=`${n+1}-08-31`,s=new Date(r),a=new Date(o),l=`${s.getDate()} ${c(s.getMonth())} ${s.getFullYear()}`,u=`${a.getDate()} ${c(a.getMonth())} ${a.getFullYear()}`,i=prompt(`📅 DATE DE DÉBUT\\n\\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\\n\\nExemple : (${l}) → ${r}\\nExemple : (8 juin 2025) → 2025-06-08\\n\\nEntre la date de début :`,r);if(!i)return null;const d=prompt(`📅 DATE DE FIN\\n\\nFormat : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\\n\\nExemple : (${u}) → ${o}\\nExemple : (31 août 2026) → 2026-08-31\\n\\nEntre la date de fin :`,o);return d?/^\\d{4}-\\d{2}-\\d{2}$/.test(i)&&/^\\d{4}-\\d{2}-\\d{2}$/.test(d)?{startDate:i,endDate:d}:(alert("❌ Format de date invalide !\\n\\nUtilise le format : ANNÉE-MOIS-JOUR\\nExemple : 2025-09-01 pour le 1er septembre 2025"),null):null}function c(e){return["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"][e]}async function i(e){const t=new URLSearchParams({"federationIds[]":e,resType:"104"});try{const e=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/LoadDisplayNames",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:t.toString(),credentials:"include"});if(!e.ok)return console.log("[Assas Exporter] Could not fetch student name"),null;const n=await e.json();if(n&&n.length>0&&n[0].displayName){const e=n[0].displayName.split(",");if(e.length>=2){const t=e[1].trim();return t.charAt(0).toUpperCase()+t.slice(1).toLowerCase()}}}catch(e){console.log("[Assas Exporter] Error fetching student name:",e)}return null}async function fetchCalendarData(e,t,n){const r=new URLSearchParams({start:t,end:n,resType:"104",calView:"agendaDay","federationIds[]":e});console.log("[Assas Exporter] Fetching calendar data...",{studentId:e,startDate:t,endDate:n});const o=await fetch("https://celcat-web.u-paris2.fr/calendar/Home/GetCalendarData",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:r.toString(),credentials:"include"});if(!o.ok)throw new Error(`Erreur API: ${o.status} ${o.statusText}`);const s=await o.json();return console.log("[Assas Exporter] Fetched events:",s.length),s}function downloadIcsFile(e,t="assas-calendar.ics"){const n=new Blob([e],{type:"text/calendar;charset=utf-8"}),r=URL.createObjectURL(n),o=document.createElement("a");o.href=r,o.download=t,document.body.appendChild(o),o.click(),document.body.removeChild(o),setTimeout(()=>URL.revokeObjectURL(r),100),console.log("[Assas Exporter] File download triggered:",t)}function showStatus(e,t="info"){const n={info:"#2196f3",success:"#4caf50",error:"#f44336"},r=document.createElement("div");r.textContent=e,r.style.cssText=`\\n    position: fixed;\\n    top: 20px;\\n    right: 20px;\\n    padding: 15px 20px;\\n    background: ${n[t]||n.info};\\n    color: white;\\n    border-radius: 4px;\\n    z-index: 999999;\\n    font-family: sans-serif;\\n    font-size: 14px;\\n    box-shadow: 0 2px 8px rgba(0,0,0,0.3);\\n    max-width: 300px;\\n  `,document.body.appendChild(r),setTimeout(()=>{r.parentNode&&r.parentNode.removeChild(r)},3e3)}"undefined"!=typeof module&&module.exports,"undefined"!=typeof module&&module.exports,async function(){"use strict";try{console.log("[Assas Exporter] Starting calendar export..."),showStatus("Recherche de ton ID...","info");let e=extractStudentId();if(!e){if(e=prompt("🎓 ID ÉTUDIANT\\n\\nTon ID n\'a pas pu être détecté automatiquement.\\n\\nOù le trouver ?\\n• En haut à droite de la page CELCAT\\n• À côté de \\"Log Out\\" (exemple: - 2401012)\\n• C\'est un nombre à 7 chiffres\\n\\nEntre ton ID étudiant :",""),!e||!e.trim())return void showStatus("Export annulé","error");e=e.trim()}console.log("[Assas Exporter] Using student ID:",e);let t=null;try{t=await i(e),t&&(console.log("[Assas Exporter] Hello",t+"!"),showStatus(`Salut ${t} ! 👋`,"success"),await new Promise(e=>setTimeout(e,1500)))}catch(e){console.log("[Assas Exporter] Could not fetch name:",e)}const n=t||"";showStatus(n?`OK ${n}, choisis tes dates...`:"Choisis tes dates...","info");const r=promptDateRange();if(!r)return void showStatus("Export annulé","error");const{startDate:o,endDate:s}=r;let a;console.log("[Assas Exporter] Date range:",o,"to",s),showStatus(n?`Récup de ton planning ${n}...`:"Récupération du planning...","info");try{a=await fetchCalendarData(e,o,s)}catch(e){return console.error("[Assas Exporter] API Error:",e),void showStatus(`Erreur API: ${e.message}`,"error")}if(!a||0===a.length)return void showStatus("Aucun événement trouvé pour cette période 🤔","error");console.log(`[Assas Exporter] Fetched ${a.length} events`),showStatus(`Analyse de ${a.length} événements...`,"info");const l=a.map(e=>({...e,parsed:parseDescription(e.description)}));let u;console.log(`[Assas Exporter] Processing ${l.length} events`),showStatus("Génération du fichier...","info");try{u=generateIcs(l)}catch(e){return console.error("[Assas Exporter] ICS Generation Error:",e),void showStatus(`Erreur: ${e.message}`,"error")}const c=`assas-calendar-${o}-${s}.ics`;downloadIcsFile(u,c);const d=l.length;showStatus(n?`C\'est bon ${n} ! ${d} cours exportés 🎉`:`✓ ${d} cours exportés 🎉`,"success"),console.log("[Assas Exporter] Export completed successfully!"),console.log(`[Assas Exporter] File: ${c}`),console.log(`[Assas Exporter] Events: ${d}`)}catch(e){console.error("[Assas Exporter] Unexpected error:",e),showStatus(`Erreur: ${e.message}`,"error")}}();})();';
 
-      try {
-        document.execCommand('copy');
-        const button = document.querySelector('.copy-button');
-        const originalText = button.textContent;
-        button.textContent = '✅ Copié !';
-        button.style.background = '#28a745';
-        button.style.color = 'white';
+      // Inject bookmarklet href dynamically to avoid HTML escaping issues
+      document.addEventListener("DOMContentLoaded", function () {
+        const link = document.getElementById("bookmarklet-link");
+        if (link) {
+          link.href = BOOKMARKLET_CODE;
+        }
+      });
 
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.style.background = '#ffc107';
-          button.style.color = '#856404';
-        }, 2000);
-      } catch (err) {
-        alert('Erreur lors de la copie. Sélectionne le texte manuellement et copie-le avec Ctrl+C (ou Cmd+C sur Mac).');
+      function copyCode() {
+        const textarea = document.getElementById("bookmarklet-code");
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // Pour mobile
+
+        try {
+          document.execCommand("copy");
+          const button = document.querySelector(".copy-button");
+          const originalText = button.textContent;
+          button.textContent = "✅ Copié !";
+          button.style.background = "#28a745";
+          button.style.color = "white";
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = "#ffc107";
+            button.style.color = "#856404";
+          }, 2000);
+        } catch (err) {
+          alert(
+            "Erreur lors de la copie. Sélectionne le texte manuellement et copie-le avec Ctrl+C (ou Cmd+C sur Mac)."
+          );
+        }
       }
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
