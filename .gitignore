@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# IDE/Tools
+.claude/
+.DS_Store
+*.log
+
+# Generated files (run `npm run build` to regenerate)
+bookmarklet/dist/
+dev/output/
+
+# Mock data - real university data (use mock-data.example.json as template)
+dev/mock-data.json
