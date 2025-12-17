@@ -8,10 +8,10 @@
  * @returns {string} Date in ICS format "20251217T090000"
  */
 function formatIcsDate(isoDate) {
-  if (!isoDate) return '';
+  if (!isoDate) return "";
 
   // Remove all separators: - : and T
-  return isoDate.replace(/[-:]/g, '').replace('T', 'T');
+  return isoDate.replace(/[-:]/g, "").replace("T", "T");
 }
 
 /**
@@ -21,13 +21,13 @@ function formatIcsDate(isoDate) {
  * @returns {string} Escaped text
  */
 function escapeIcsText(text) {
-  if (!text) return '';
+  if (!text) return "";
 
   return text
-    .replace(/\\/g, '\\\\')     // Backslash must be first
-    .replace(/;/g, '\\;')       // Semicolon
-    .replace(/,/g, '\\,')       // Comma
-    .replace(/\n/g, '\\n');     // Newline becomes literal \n
+    .replace(/\\/g, "\\\\") // Backslash must be first
+    .replace(/;/g, "\\;") // Semicolon
+    .replace(/,/g, "\\,") // Comma
+    .replace(/\n/g, "\\n"); // Newline becomes literal \n
 }
 
 /**
@@ -50,11 +50,11 @@ function foldLine(line) {
 
   // Subsequent lines: 74 chars (because of leading space)
   while (remaining.length > 0) {
-    result.push(' ' + remaining.substring(0, 74));
+    result.push(" " + remaining.substring(0, 74));
     remaining = remaining.substring(74);
   }
 
-  return result.join('\r\n');
+  return result.join("\r\n");
 }
 
 /**
@@ -64,11 +64,11 @@ function foldLine(line) {
 function generateDtstamp() {
   const now = new Date();
   const year = now.getUTCFullYear();
-  const month = String(now.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(now.getUTCDate()).padStart(2, '0');
-  const hours = String(now.getUTCHours()).padStart(2, '0');
-  const minutes = String(now.getUTCMinutes()).padStart(2, '0');
-  const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+  const month = String(now.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(now.getUTCDate()).padStart(2, "0");
+  const hours = String(now.getUTCHours()).padStart(2, "0");
+  const minutes = String(now.getUTCMinutes()).padStart(2, "0");
+  const seconds = String(now.getUTCSeconds()).padStart(2, "0");
 
   return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
 }
@@ -79,30 +79,33 @@ function generateDtstamp() {
  * @returns {string} Decoded text
  */
 function decodeHtmlEntities(text) {
-  if (!text) return '';
+  if (!text) return "";
 
   // Common HTML entities in the CELCAT data
   const entities = {
-    '&#233;': 'é',  // é
-    '&#232;': 'è',  // è
-    '&#234;': 'ê',  // ê
-    '&#224;': 'à',  // à
-    '&#226;': 'â',  // â
-    '&#231;': 'ç',  // ç
-    '&#244;': 'ô',  // ô
-    '&#249;': 'ù',  // ù
-    '&#251;': 'û',  // û
-    '&#239;': 'ï',  // ï
-    '&amp;': '&',   // &
-    '&lt;': '<',    // <
-    '&gt;': '>',    // >
-    '&quot;': '"',  // "
-    '&#39;': "'",   // '
+    "&#233;": "é", // é
+    "&#232;": "è", // è
+    "&#234;": "ê", // ê
+    "&#238;": "î", // î
+    "&#224;": "à", // à
+    "&#226;": "â", // â
+    "&#231;": "ç", // ç
+    "&#244;": "ô", // ô
+    "&#249;": "ù", // ù
+    "&#251;": "û", // û
+    "&#239;": "ï", // ï
+    "&#246;": "ö", // ö
+    "&#252;": "ü", // ü
+    "&amp;": "&", // &
+    "&lt;": "<", // <
+    "&gt;": ">", // >
+    "&quot;": '"', // "
+    "&#39;": "'", // '
   };
 
   let result = text;
   for (const [entity, char] of Object.entries(entities)) {
-    result = result.replace(new RegExp(entity, 'g'), char);
+    result = result.replace(new RegExp(entity, "g"), char);
   }
 
   return result;
@@ -114,15 +117,15 @@ function decodeHtmlEntities(text) {
  * @returns {string} Abbreviated category
  */
 function abbreviateCategory(category) {
-  if (!category) return '';
+  if (!category) return "";
 
   const abbreviations = {
-    'Cours magistral': 'CM',
-    'Travaux dirigés': 'TD',
-    'Travaux pratiques': 'TP',
-    'Conférence': 'Conf',
-    'Séminaire': 'Sém',
-    'Examen': 'Exam',
+    "Cours magistral": "CM",
+    "Travaux dirigés": "TD",
+    "Travaux pratiques": "TP",
+    Conférence: "Conf",
+    Séminaire: "Sém",
+    Examen: "Exam",
   };
 
   return abbreviations[category] || category;
@@ -134,5 +137,5 @@ module.exports = {
   foldLine,
   generateDtstamp,
   decodeHtmlEntities,
-  abbreviateCategory
+  abbreviateCategory,
 };

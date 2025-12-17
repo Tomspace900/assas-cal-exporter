@@ -2,7 +2,7 @@
  * Parser module for extracting structured data from CELCAT description fields
  */
 
-const { decodeHtmlEntities } = require('./utils');
+const { decodeHtmlEntities } = require("./utils");
 
 /**
  * Cleans a group string to extract just the essential identifier
@@ -21,8 +21,8 @@ function cleanGroupString(groupString) {
   }
 
   // If it's "OPTION" (with or without additional text), return "OPTION"
-  if (groupString.toUpperCase().includes('OPTION')) {
-    return 'OPTION';
+  if (groupString.toUpperCase().includes("OPTION")) {
+    return "OPTION";
   }
 
   // For special cases like "COACHING", "ANUULE", etc., return as-is
@@ -47,25 +47,25 @@ function parseDescription(rawDescription) {
       module: null,
       staff: null,
       group: null,
-      room: null
+      room: null,
     };
   }
 
   // Step 1: Normalize line breaks
   // Replace \r\n and <br /> with simple \n
   let normalized = rawDescription
-    .replace(/<br\s*\/?>/gi, '\n')  // <br /> or <br> to newline
-    .replace(/\r\n/g, '\n')          // \r\n to \n
-    .replace(/\r/g, '\n');           // Any remaining \r to \n
+    .replace(/<br\s*\/?>/gi, "\n") // <br /> or <br> to newline
+    .replace(/\r\n/g, "\n") // \r\n to \n
+    .replace(/\r/g, "\n"); // Any remaining \r to \n
 
   // Step 2: Decode HTML entities (é, &amp;, etc.)
   normalized = decodeHtmlEntities(normalized);
 
   // Step 3: Split into lines and filter out empty ones
   const lines = normalized
-    .split('\n')
-    .map(line => line.trim())
-    .filter(line => line.length > 0);
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
 
   // Step 4: Initialize result object
   const result = {
@@ -73,7 +73,7 @@ function parseDescription(rawDescription) {
     module: null,
     staff: null,
     group: null,
-    room: null
+    room: null,
   };
 
   // Step 5: Parse each line
@@ -82,9 +82,39 @@ function parseDescription(rawDescription) {
   // Line 1: Event category
   result.category = lines[0];
 
-  // Line 2: Module name
+  // Line 2: Module name (but could also be staff name if no module!)
   if (lines.length > 1) {
-    result.module = lines[1];
+    const line2 = lines[1];
+
+    // Pattern 1: LASTNAME, Firstname (single or multiple staff separated by comma)
+    // e.g., "BLONDET, Pierre" or "BLONDET, Pierre, VOYNNET-FOURBOUL, Catherine"
+    const STAFF_LASTNAME_FIRST = /^([A-ZÀ-Ö][A-ZÀ-Ö\s-]+),\s*([A-ZÀ-Öa-zà-ö][a-zà-ö\s-]+)/;
+
+    // Pattern 2: Simple "Firstname Lastname" (2-3 words, starts with capital)
+    // e.g., "Pierre Gaudibert", "Jean-Pierre Martin"
+    const STAFF_SIMPLE_NAME = /^[A-ZÀ-Ö][a-zà-ö-]+\s+[A-ZÀ-Ö][a-zà-ö-]+$/;
+
+    // Check if line 2 looks like a staff name
+    const isStaffPattern1 = STAFF_LASTNAME_FIRST.test(line2);
+    const isStaffPattern2 = STAFF_SIMPLE_NAME.test(line2) && line2.split(/\s+/).length <= 3;
+
+    if (isStaffPattern1 || isStaffPattern2) {
+      // Line 2 is actually a staff name, not a module
+      result.staff = line2;
+      result.module = null;
+    } else {
+      // Clean module: remove duplicate parts (e.g., "Name, Name" -> "Name")
+      let cleanModule = line2;
+      if (line2.includes(",")) {
+        const parts = line2.split(",").map((p) => p.trim());
+        // Check if parts are duplicates
+        const unique = [...new Set(parts)];
+        if (unique.length < parts.length) {
+          cleanModule = unique.join(", ");
+        }
+      }
+      result.module = cleanModule;
+    }
   }
 
   // Lines 3+: Could be room, staff, or group
@@ -196,13 +226,13 @@ function buildIcsDescription(parsed, event) {
   }
 
   if (event.modules && event.modules.length > 0) {
-    parts.push(`Code: ${event.modules.join(', ')}`);
+    parts.push(`Code: ${event.modules.join(", ")}`);
   }
 
-  return parts.join('\n');
+  return parts.join("\n");
 }
 
 module.exports = {
   parseDescription,
-  buildIcsDescription
+  buildIcsDescription,
 };

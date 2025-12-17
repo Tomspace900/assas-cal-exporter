@@ -14,20 +14,18 @@ async function buildBookmarklet() {
     // Step 1: Read all source files
     console.log("Step 1: Reading source files...");
 
-    const srcRoot = path.join(__dirname, "..");
+    const srcDir = path.join(__dirname, "src");
     const files = {
-      utils: fs.readFileSync(path.join(srcRoot, "src/utils.js"), "utf8"),
-      parser: fs.readFileSync(path.join(srcRoot, "src/parser.js"), "utf8"),
-      icsGenerator: fs.readFileSync(path.join(srcRoot, "src/ics-generator.js"), "utf8"),
-      studentIdExtractor: fs.readFileSync(
-        path.join(__dirname, "src/student-id-extractor.js"),
-        "utf8"
-      ),
-      browserAdapter: fs.readFileSync(path.join(__dirname, "src/browser-adapter.js"), "utf8"),
-      bookmarklet: fs.readFileSync(path.join(__dirname, "src/main.js"), "utf8"),
+      utils: fs.readFileSync(path.join(srcDir, "utils.js"), "utf8"),
+      parser: fs.readFileSync(path.join(srcDir, "parser.js"), "utf8"),
+      icsGenerator: fs.readFileSync(path.join(srcDir, "ics-generator.js"), "utf8"),
+      studentIdExtractor: fs.readFileSync(path.join(srcDir, "student-id-extractor.js"), "utf8"),
+      browserAdapter: fs.readFileSync(path.join(srcDir, "browser-adapter.js"), "utf8"),
+      dialog: fs.readFileSync(path.join(srcDir, "dialog.js"), "utf8"),
+      bookmarklet: fs.readFileSync(path.join(srcDir, "main.js"), "utf8"),
     };
 
-    console.log("✓ Read 6 source files\n");
+    console.log("✓ Read 7 source files\n");
 
     // Step 2: Remove CommonJS module syntax
     console.log("Step 2: Removing CommonJS syntax...");
@@ -53,6 +51,7 @@ async function buildBookmarklet() {
       icsGenerator: cleanModuleSyntax(files.icsGenerator),
       studentIdExtractor: cleanModuleSyntax(files.studentIdExtractor),
       browserAdapter: cleanModuleSyntax(files.browserAdapter),
+      dialog: cleanModuleSyntax(files.dialog),
       bookmarklet: cleanModuleSyntax(files.bookmarklet),
     };
 
@@ -76,6 +75,9 @@ async function buildBookmarklet() {
       "",
       "// === Browser Adapter ===",
       cleaned.browserAdapter,
+      "",
+      "// === Dialog UI ===",
+      cleaned.dialog,
       "",
       "// === Main Bookmarklet ===",
       cleaned.bookmarklet,
@@ -103,10 +105,11 @@ async function buildBookmarklet() {
         reserved: [
           "showStatus",
           "extractStudentId",
-          "promptDateRange",
-          "promptGroupFilter",
+          "showDateDialog",
+          "showFilterDialog",
+          "extractFilterOptions",
+          "filterEvents",
           "fetchCalendarData",
-          "filterEventsByGroup",
           "parseDescription",
           "generateIcs",
           "downloadIcsFile",

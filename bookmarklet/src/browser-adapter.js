@@ -22,15 +22,19 @@ function promptDateRange() {
   const startDate = new Date(academicYearStart);
   const endDate = new Date(academicYearEnd);
 
-  const startExample = `${startDate.getDate()} ${getMonthName(startDate.getMonth())} ${startDate.getFullYear()}`;
-  const endExample = `${endDate.getDate()} ${getMonthName(endDate.getMonth())} ${endDate.getFullYear()}`;
+  const startExample = `${startDate.getDate()} ${getMonthName(
+    startDate.getMonth()
+  )} ${startDate.getFullYear()}`;
+  const endExample = `${endDate.getDate()} ${getMonthName(
+    endDate.getMonth()
+  )} ${endDate.getFullYear()}`;
 
   const start = prompt(
     `📅 DATE DE DÉBUT\n\n` +
-    `Format : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\n` +
-    `Exemple : (${startExample}) → ${academicYearStart}\n` +
-    `Exemple : (8 juin 2025) → 2025-06-08\n\n` +
-    `Entre la date de début :`,
+      `Format : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\n` +
+      `Exemple : (${startExample}) → ${academicYearStart}\n` +
+      `Exemple : (8 juin 2025) → 2025-06-08\n\n` +
+      `Entre la date de début :`,
     academicYearStart
   );
 
@@ -38,10 +42,10 @@ function promptDateRange() {
 
   const end = prompt(
     `📅 DATE DE FIN\n\n` +
-    `Format : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\n` +
-    `Exemple : (${endExample}) → ${academicYearEnd}\n` +
-    `Exemple : (31 août 2026) → 2026-08-31\n\n` +
-    `Entre la date de fin :`,
+      `Format : ANNÉE-MOIS-JOUR (YYYY-MM-DD)\n\n` +
+      `Exemple : (${endExample}) → ${academicYearEnd}\n` +
+      `Exemple : (31 août 2026) → 2026-08-31\n\n` +
+      `Entre la date de fin :`,
     academicYearEnd
   );
 
@@ -50,9 +54,9 @@ function promptDateRange() {
   // Basic validation
   if (!/^\d{4}-\d{2}-\d{2}$/.test(start) || !/^\d{4}-\d{2}-\d{2}$/.test(end)) {
     alert(
-      '❌ Format de date invalide !\n\n' +
-      'Utilise le format : ANNÉE-MOIS-JOUR\n' +
-      'Exemple : 2025-09-01 pour le 1er septembre 2025'
+      "❌ Format de date invalide !\n\n" +
+        "Utilise le format : ANNÉE-MOIS-JOUR\n" +
+        "Exemple : 2025-09-01 pour le 1er septembre 2025"
     );
     return null;
   }
@@ -67,8 +71,18 @@ function promptDateRange() {
  */
 function getMonthName(monthIndex) {
   const months = [
-    'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
   ];
   return months[monthIndex];
 }
@@ -79,25 +93,25 @@ function getMonthName(monthIndex) {
  * @returns {Promise<string|null>} Student first name or null
  */
 async function fetchStudentName(studentId) {
-  const url = 'https://celcat-web.u-paris2.fr/calendar/Home/LoadDisplayNames';
+  const url = "https://celcat-web.u-paris2.fr/calendar/Home/LoadDisplayNames";
 
   const formData = new URLSearchParams({
-    'federationIds[]': studentId,
-    resType: '104' // Hardcodé pour M2 GRH
+    "federationIds[]": studentId,
+    resType: "104", // Hardcodé pour M2 GRH
   });
 
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: formData.toString(),
-      credentials: 'include'
+      credentials: "include",
     });
 
     if (!response.ok) {
-      console.log('[Assas Exporter] Could not fetch student name');
+      console.log("[Assas Exporter] Could not fetch student name");
       return null;
     }
 
@@ -105,7 +119,7 @@ async function fetchStudentName(studentId) {
     // Response: [{"federationId": "2401012", "displayName": "PERIN,ELEONORE"}]
     if (data && data.length > 0 && data[0].displayName) {
       const displayName = data[0].displayName; // "PERIN,ELEONORE"
-      const parts = displayName.split(',');
+      const parts = displayName.split(",");
       if (parts.length >= 2) {
         // Get first name and capitalize properly
         const firstName = parts[1].trim();
@@ -113,7 +127,7 @@ async function fetchStudentName(studentId) {
       }
     }
   } catch (e) {
-    console.log('[Assas Exporter] Error fetching student name:', e);
+    console.log("[Assas Exporter] Error fetching student name:", e);
   }
 
   return null;
@@ -127,30 +141,30 @@ async function fetchStudentName(studentId) {
  * @returns {Promise<Array>} Array of events
  */
 async function fetchCalendarData(studentId, startDate, endDate) {
-  const url = 'https://celcat-web.u-paris2.fr/calendar/Home/GetCalendarData';
+  const url = "https://celcat-web.u-paris2.fr/calendar/Home/GetCalendarData";
 
   // Build form data
   const formData = new URLSearchParams({
     start: startDate,
     end: endDate,
-    resType: '104', // TODO: hardcodé pour M2 GRH - si ne fonctionne pas, chercher dans l'URL CELCAT
-    calView: 'agendaDay',
-    'federationIds[]': studentId
+    resType: "104", // TODO: hardcodé pour M2 GRH - si ne fonctionne pas, chercher dans l'URL CELCAT
+    calView: "agendaDay",
+    "federationIds[]": studentId,
   });
 
-  console.log('[Assas Exporter] Fetching calendar data...', {
+  console.log("[Assas Exporter] Fetching calendar data...", {
     studentId,
     startDate,
-    endDate
+    endDate,
   });
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/x-www-form-urlencoded",
     },
     body: formData.toString(),
-    credentials: 'include' // Include cookies for authentication
+    credentials: "include", // Include cookies for authentication
   });
 
   if (!response.ok) {
@@ -158,7 +172,7 @@ async function fetchCalendarData(studentId, startDate, endDate) {
   }
 
   const events = await response.json();
-  console.log('[Assas Exporter] Fetched events:', events.length);
+  console.log("[Assas Exporter] Fetched events:", events.length);
 
   return events;
 }
@@ -168,8 +182,10 @@ async function fetchCalendarData(studentId, startDate, endDate) {
  * @returns {boolean} True if mobile device detected
  */
 function isMobileDevice() {
-  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-    (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+  return (
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints && navigator.maxTouchPoints > 2)
+  );
 }
 
 /**
@@ -179,41 +195,41 @@ function isMobileDevice() {
  * @param {string} icsContent - Complete ICS file content
  * @param {string} filename - Desired filename
  */
-async function downloadIcsFile(icsContent, filename = 'assas-calendar.ics') {
-  const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+async function downloadIcsFile(icsContent, filename = "assas-calendar.ics") {
+  const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
 
   // Try mobile share API if on mobile device
   if (isMobileDevice() && navigator.share && navigator.canShare) {
     try {
-      const file = new File([blob], filename, { type: 'text/calendar;charset=utf-8' });
+      const file = new File([blob], filename, { type: "text/calendar;charset=utf-8" });
 
       // Check if the browser can share files
       if (navigator.canShare({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: 'Calendrier Assas',
-          text: 'Importer dans ton calendrier'
+          title: "Calendrier Assas",
+          text: "Importer dans ton calendrier",
         });
-        console.log('[Assas Exporter] File shared successfully');
-        showStatus('📅 Fichier partagé ! Choisis ton app calendrier', 'success');
+        console.log("[Assas Exporter] File shared successfully");
+        showStatus("📅 Fichier partagé ! Choisis ton app calendrier", "success");
         return;
       }
     } catch (error) {
       // User cancelled or share failed
-      if (error.name === 'AbortError') {
-        console.log('[Assas Exporter] User cancelled share, falling back to download');
-        showStatus('📥 Téléchargement du fichier...', 'info');
+      if (error.name === "AbortError") {
+        console.log("[Assas Exporter] User cancelled share, falling back to download");
+        showStatus("📥 Téléchargement du fichier...", "info");
         // Fall through to download
       } else {
         // Other error: fallback to standard download
-        console.log('[Assas Exporter] Share failed, falling back to download:', error);
+        console.log("[Assas Exporter] Share failed, falling back to download:", error);
       }
     }
   }
 
   // Fallback: standard download (desktop, mobile without support, or cancelled share)
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
   a.download = filename;
   document.body.appendChild(a);
@@ -223,54 +239,85 @@ async function downloadIcsFile(icsContent, filename = 'assas-calendar.ics') {
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 100);
 
-  console.log('[Assas Exporter] File download triggered:', filename);
+  console.log("[Assas Exporter] File download triggered:", filename);
 }
 
+// Toast management for stacking
+const toastState = {
+  toasts: [],
+  maxToasts: 5,
+  toastHeight: 60, // Approximate height including margin
+  baseTop: 20,
+};
+
 /**
- * Shows status message to user
+ * Shows status message to user with stacking support
  * @param {string} message - Message to display
  * @param {string} type - 'info', 'success', 'error'
  */
-function showStatus(message, type = 'info') {
+function showStatus(message, type = "info") {
   const colors = {
-    info: '#2196f3',
-    success: '#4caf50',
-    error: '#f44336'
+    info: "#2196f3",
+    success: "#4caf50",
+    error: "#f44336",
   };
 
-  const div = document.createElement('div');
+  // Remove oldest toast if at max
+  if (toastState.toasts.length >= toastState.maxToasts) {
+    const oldest = toastState.toasts.shift();
+    if (oldest && oldest.parentNode) oldest.remove();
+  }
+
+  // Calculate position based on existing toasts
+  const topPosition = toastState.baseTop + toastState.toasts.length * toastState.toastHeight;
+
+  const div = document.createElement("div");
   div.textContent = message;
   div.style.cssText = `
     position: fixed;
-    top: 20px;
+    top: ${topPosition}px;
     right: 20px;
     padding: 15px 20px;
     background: ${colors[type] || colors.info};
     color: white;
-    border-radius: 4px;
-    z-index: 999999;
-    font-family: sans-serif;
+    border-radius: 8px;
+    z-index: 9999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     max-width: 300px;
+    transition: top 0.2s ease, opacity 0.2s ease;
   `;
 
   document.body.appendChild(div);
+  toastState.toasts.push(div);
+
+  // Auto-remove after delay
   setTimeout(() => {
+    const index = toastState.toasts.indexOf(div);
+    if (index > -1) {
+      toastState.toasts.splice(index, 1);
+      // Reposition remaining toasts
+      toastState.toasts.forEach((t, i) => {
+        t.style.top = `${toastState.baseTop + i * toastState.toastHeight}px`;
+      });
+    }
     if (div.parentNode) {
-      div.parentNode.removeChild(div);
+      div.style.opacity = "0";
+      setTimeout(() => div.remove(), 200);
     }
   }, 3000);
 }
 
 // For Node.js compatibility (not used in browser)
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     isMobileDevice,
     promptDateRange,
     fetchStudentName,
     fetchCalendarData,
     downloadIcsFile,
-    showStatus
+    showStatus,
   };
 }

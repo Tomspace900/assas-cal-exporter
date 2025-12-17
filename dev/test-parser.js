@@ -3,7 +3,7 @@
  * Validates parsing logic with various edge cases
  */
 
-const { parseDescription } = require('../src/parser');
+const { parseDescription } = require('../bookmarklet/src/parser');
 
 // Simple assertion helper
 function assert(condition, message) {

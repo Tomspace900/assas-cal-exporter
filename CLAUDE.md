@@ -17,29 +17,24 @@ npm run build
 
 # Test parser logic with unit tests
 npm test
-
-# Run dev POC with mock data
-npm run dev
-
-# Analyze real data and verify parsing logic
-npm run analyze
 ```
 
 ## Architecture
 
-### Core Modules (CommonJS)
+### Bookmarklet Source Code
 
-The core logic is written in CommonJS modules that work in both Node.js (for testing) and browser (after build transformation):
+All source code is in `bookmarklet/src/` for simplicity. Modules use CommonJS for Node.js compatibility (testing) and are transformed for browser use during build:
 
-- **src/utils.js**: Pure utility functions (ICS date formatting, HTML entity decoding, text escaping, line folding)
-- **src/parser.js**: Extracts structured data from CELCAT description fields (category, module, staff, room, group)
-- **src/ics-generator.js**: Generates RFC 5545-compliant ICS files from parsed event data
+**Core Utilities:**
+- **bookmarklet/src/utils.js**: Pure utility functions (ICS date formatting, HTML entity decoding, text escaping, line folding)
+- **bookmarklet/src/parser.js**: Extracts structured data from CELCAT description fields (category, module, staff, room, group)
+- **bookmarklet/src/ics-generator.js**: Generates RFC 5545-compliant ICS files from parsed event data
 
-### Browser-Specific Modules
-
+**Browser Functionality:**
 - **bookmarklet/src/student-id-extractor.js**: Extracts student ID from DOM or URL (tries navbar, DOM scan, query params, hash fragment)
-- **bookmarklet/src/browser-adapter.js**: Browser APIs (fetch, prompts, file download, status UI)
-- **bookmarklet/src/main.js**: Main orchestration workflow (IIFE that coordinates extraction, fetching, parsing, generation)
+- **bookmarklet/src/browser-adapter.js**: Browser APIs (fetch, prompts, file download, status UI, mobile share)
+- **bookmarklet/src/dialog.js**: Interactive dialogs (date selection, filters)
+- **bookmarklet/src/main.js**: Main orchestration workflow (IIFE that coordinates all operations)
 
 ### GitHub Pages Installation
 

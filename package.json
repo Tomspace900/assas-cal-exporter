@@ -2,12 +2,9 @@
   "name": "assas-calendar-exporter",
   "version": "2.0.0",
   "description": "📅 Export Assas CELCAT calendar to ICS - Bookmarklet friendly & personalized",
-  "main": "dev/poc.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "node dev/poc.js",
     "test": "node dev/test-parser.js",
-    "analyze": "node dev/analyze.js",
     "build": "node bookmarklet/build.js"
   },
   "keywords": [

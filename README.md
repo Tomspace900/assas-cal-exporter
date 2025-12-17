@@ -46,6 +46,32 @@ Si tu veux modifier le code ou l'installer manuellement :
 
 Voir [dev/README.md](dev/README.md) pour la documentation développeur.
 
+## 🔍 Règles de Parsing
+
+Le parser extrait les informations des descriptions CELCAT qui suivent ce format :
+
+```
+Ligne 1: Catégorie (Cours magistral, TD, Examen...)
+Ligne 2: Module OU Nom du prof (si pas de module)
+Ligne 3+: Salle, Prof, Groupe, ou autres infos
+```
+
+### Détection intelligente
+
+| Ligne 2 ressemble à...            | Résultat   |
+| --------------------------------- | ---------- |
+| `NOM, Prénom` (ex: DUPONT, Marie) | → `staff`  |
+| `Prénom Nom` (ex: Pierre Martin)  | → `staff`  |
+| Autre texte                       | → `module` |
+
+### Classification des événements
+
+| Condition                | Catégorie dans le dialog          |
+| ------------------------ | --------------------------------- |
+| `Groupe 1` ou `Groupe 2` | 👥 Mon groupe (checkbox)          |
+| Contient `OPTION`        | 📚 Mes options (checkbox)         |
+| Tout le reste            | 📖 Tronc commun (toujours inclus) |
+
 ## 📝 License
 
 MIT - [Thomas GENDRON](https://github.com/tomspace900)
