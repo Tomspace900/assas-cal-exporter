@@ -41,6 +41,16 @@ The core logic is written in CommonJS modules that work in both Node.js (for tes
 - **bookmarklet/src/browser-adapter.js**: Browser APIs (fetch, prompts, file download, status UI)
 - **bookmarklet/src/main.js**: Main orchestration workflow (IIFE that coordinates extraction, fetching, parsing, generation)
 
+### GitHub Pages Installation
+
+- **docs/index.html**: Drag-and-drop installation page hosted at https://tomspace900.github.io/assas-cal-exporter/
+  - Provides visual installation instructions with drag-and-drop bookmarklet button
+  - Includes calendar import guides with direct links to Google Calendar, Outlook, and Apple Calendar
+  - Features inline SVG icons for each calendar service
+  - Injects the built bookmarklet code at build time
+  - Optimized for both desktop and mobile experiences (detects device and shows appropriate instructions)
+  - Contains fallback manual installation instructions
+
 ### Build Process
 
 **bookmarklet/build.js** transforms the codebase for browser deployment:
@@ -54,6 +64,10 @@ The core logic is written in CommonJS modules that work in both Node.js (for tes
    - `bookmarklet/dist/bookmarklet.debug.js` (non-minified for debugging)
    - `bookmarklet/dist/bookmarklet.min.js` (minified)
    - `bookmarklet/dist/bookmarklet.txt` (final bookmarklet code to paste in browser bookmark)
+7. Generates GitHub Pages installation page:
+   - Reads `bookmarklet/template.html`
+   - Injects bookmarklet code (both escaped for JS and raw for display)
+   - Writes to `docs/index.html` (served at GitHub Pages URL)
 
 ### CELCAT API Integration
 
