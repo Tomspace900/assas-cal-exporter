@@ -186,7 +186,7 @@ async function buildBookmarklet() {
       `  - Compression: ${Math.round((1 - minifiedCode.length / combined.length) * 100)}%`
     );
     console.log("\nNext steps:");
-    console.log("1. Visit https://thomasgendron.github.io/assas-cal-exporter/");
+    console.log("1. Visit https://tomspace900.github.io/assas-cal-exporter/");
     console.log("2. Share this URL with your classmates!");
     console.log("\nManual installation (alternative):");
     console.log("1. Open bookmarklet/dist/bookmarklet.txt");

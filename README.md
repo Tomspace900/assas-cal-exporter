@@ -4,7 +4,7 @@ Un bookmarklet pour exporter ton emploi du temps CELCAT en fichier `.ics` (compa
 
 ## 🌐 Installation Simple (recommandé)
 
-**Partage cette URL** : https://thomasgendron.github.io/assas-cal-exporter/
+**Partage cette URL** : https://tomspace900.github.io/assas-cal-exporter/
 
 1. Glisse le bouton vers ta barre de favoris
 2. Va sur [CELCAT](https://celcat-web.u-paris2.fr/calendar/) et clique sur ton favori
@@ -48,4 +48,4 @@ Voir [dev/README.md](dev/README.md) pour la documentation développeur.
 
 ## 📝 License
 
-MIT - [Thomas GENDRON](https://github.com/thomasgendron)
+MIT - [Thomas GENDRON](https://github.com/tomspace900)

@@ -22,12 +22,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thomasgendron/assas-cal-exporter.git"
+    "url": "https://github.com/tomspace900/assas-cal-exporter.git"
   },
   "bugs": {
-    "url": "https://github.com/thomasgendron/assas-cal-exporter/issues"
+    "url": "https://github.com/tomspace900/assas-cal-exporter/issues"
   },
-  "homepage": "https://github.com/thomasgendron/assas-cal-exporter#readme",
+  "homepage": "https://github.com/tomspace900/assas-cal-exporter#readme",
   "devDependencies": {
     "terser": "^5.16.0"
   }
