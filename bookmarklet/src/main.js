@@ -99,10 +99,10 @@
       return;
     }
 
-    // === STEP 6: Download File ===
+    // === STEP 6: Download/Share File ===
     const filename = `assas-calendar-${startDate}-${endDate}.ics`;
 
-    downloadIcsFile(icsContent, filename);
+    await downloadIcsFile(icsContent, filename);
 
     // === STEP 7: Success! ===
     const eventCount = parsedEvents.length;

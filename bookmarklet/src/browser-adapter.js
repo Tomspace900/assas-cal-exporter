@@ -164,14 +164,55 @@ async function fetchCalendarData(studentId, startDate, endDate) {
 }
 
 /**
- * Triggers download of .ics file in browser
+ * Detects if the user is on a mobile device
+ * @returns {boolean} True if mobile device detected
+ */
+function isMobileDevice() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+}
+
+/**
+ * Triggers download of .ics file in browser (or shares on mobile)
+ * On mobile devices with navigator.share() support, attempts to share the file
+ * Falls back to standard download on desktop or if sharing fails
  * @param {string} icsContent - Complete ICS file content
  * @param {string} filename - Desired filename
  */
-function downloadIcsFile(icsContent, filename = 'assas-calendar.ics') {
+async function downloadIcsFile(icsContent, filename = 'assas-calendar.ics') {
   const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
 
+  // Try mobile share API if on mobile device
+  if (isMobileDevice() && navigator.share && navigator.canShare) {
+    try {
+      const file = new File([blob], filename, { type: 'text/calendar;charset=utf-8' });
+
+      // Check if the browser can share files
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Calendrier Assas',
+          text: 'Importer dans ton calendrier'
+        });
+        console.log('[Assas Exporter] File shared successfully');
+        showStatus('📅 Fichier partagé ! Choisis ton app calendrier', 'success');
+        return;
+      }
+    } catch (error) {
+      // User cancelled or share failed
+      if (error.name === 'AbortError') {
+        console.log('[Assas Exporter] User cancelled share, falling back to download');
+        showStatus('📥 Téléchargement du fichier...', 'info');
+        // Fall through to download
+      } else {
+        // Other error: fallback to standard download
+        console.log('[Assas Exporter] Share failed, falling back to download:', error);
+      }
+    }
+  }
+
+  // Fallback: standard download (desktop, mobile without support, or cancelled share)
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
@@ -225,6 +266,7 @@ function showStatus(message, type = 'info') {
 // For Node.js compatibility (not used in browser)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
+    isMobileDevice,
     promptDateRange,
     fetchStudentName,
     fetchCalendarData,

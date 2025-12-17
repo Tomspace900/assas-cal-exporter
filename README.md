@@ -37,7 +37,7 @@ Si tu veux modifier le code ou l'installer manuellement :
 ## ✨ Fonctionnalités
 
 - Exporte tout le calendrier en un clic
-- Personnalise le message de bienvenue avec ton prénom
+- Sélectionne les dates de début et de fin
 - Transforme les types de cours en abréviations (CM, TD, TP)
 - Génère un fichier `.ics` compatible avec tous les calendriers
 - Inclut tous les cours de l'année
