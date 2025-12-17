@@ -289,6 +289,24 @@
         text-decoration: underline;
       }
 
+      .mobile-disclaimer {
+        background: #fff3cd;
+        border-left: 5px solid #ffc107;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+
+      .mobile-disclaimer p {
+        margin: 0;
+        color: #856404;
+        font-size: 1.05em;
+      }
+
+      .mobile-disclaimer strong {
+        color: #856404;
+      }
+
       @media (max-width: 600px) {
         .container {
           padding: 25px;
@@ -303,8 +321,7 @@
         }
 
         .installation h2 {
-          font-size: 1.4em;
-          margin-bottom: 20px;
+          display: none;
         }
 
         .bookmarklet-button {
@@ -336,6 +353,15 @@
       <main>
         <section class="installation">
           <h2>📥 Installation (30 secondes)</h2>
+
+          <!-- Mobile disclaimer (hidden by default, shown on mobile) -->
+          <div class="mobile-disclaimer" id="mobile-disclaimer" style="display: none">
+            <p>
+              ⚠️ <strong>Note :</strong> Sur téléphone/tablette ça risque de ne pas fonctionner à
+              cause des navigateurs mobiles qui sont limités. Je te recommande plutôt d'utiliser un
+              ordi !
+            </p>
+          </div>
 
           <!-- Desktop instructions -->
           <div class="step" id="desktop-instructions">
@@ -620,6 +646,7 @@
           const mobileStep3 = document.getElementById("mobile-step-3");
           const desktopStep2 = document.getElementById("desktop-step-2");
           const helpSection = document.querySelector(".help");
+          const mobileDisclaimer = document.getElementById("mobile-disclaimer");
 
           if (desktopInstructions) desktopInstructions.style.display = "none";
           if (mobileInstructions) mobileInstructions.style.display = "block";
@@ -627,6 +654,7 @@
           if (mobileStep3) mobileStep3.style.display = "block";
           if (desktopStep2) desktopStep2.style.display = "none";
           if (helpSection) helpSection.style.display = "none";
+          if (mobileDisclaimer) mobileDisclaimer.style.display = "block";
 
           // Adapt import section for mobile
           const importDesktopText = document.getElementById("import-desktop-text");

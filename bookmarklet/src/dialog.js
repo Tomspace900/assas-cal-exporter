@@ -104,12 +104,14 @@ const BASE_STYLES = `
     font-size: 15px;
   }
   .${PREFIX}-checkbox-list {
-    max-height: 180px;
-    overflow-y: auto;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     padding: 8px 12px;
     background: #f8f9fa;
+  }
+  .${PREFIX}-checkbox-list-scrollable {
+    max-height: 200px;
+    overflow-y: auto;
   }
   .${PREFIX}-checkbox-item {
     display: block;
@@ -131,6 +133,30 @@ const BASE_STYLES = `
     margin-bottom: 16px;
     font-size: 14px;
     color: #1565c0;
+  }
+  .${PREFIX}-accordion-toggle {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+  }
+  .${PREFIX}-accordion-toggle::before {
+    content: "▶";
+    font-size: 10px;
+    margin-right: 8px;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+  .${PREFIX}-accordion-toggle.${PREFIX}-open::before {
+    transform: rotate(90deg);
+  }
+  .${PREFIX}-accordion-content {
+    display: none;
+    padding-left: 24px;
+    margin-top: 4px;
+  }
+  .${PREFIX}-accordion-content.${PREFIX}-open {
+    display: block;
   }
 `;
 
@@ -236,27 +262,19 @@ function showDateDialog() {
  * Extracts unique filter options from parsed events
  * OPTION is not a group - it means "optional course"
  * @param {Array} events - Events with parsed property
- * @returns {Object} { groups: [], options: [] }
+ * @returns {Object} { groups: [], options: [], troncCommun: [], troncCommunCount: number }
  */
 function extractFilterOptions(events) {
-  // Only "1" and "2" are valid groups
-  const VALID_GROUPS = ["1", "2"];
-
-  // Store events per group and per option for debug
-  const groupEvents = {}; // { "1": [event1, event2, ...], "2": [...] }
+  // Store events per group and per option
+  const groupEvents = {}; // { "groupId": { events: [], courses: { "module|||staff": count } } }
   const optionEvents = {}; // { "id": { events: [...], module, staff } }
   const troncCommunEvents = []; // Events without group/option
 
   events.forEach((event) => {
     const p = event.parsed;
 
-    // Check if it's a valid group (1 or 2)
-    if (p.group && VALID_GROUPS.includes(p.group)) {
-      if (!groupEvents[p.group]) groupEvents[p.group] = [];
-      groupEvents[p.group].push(event);
-    }
-    // Check if it's an optional course
-    else if (p.group && p.group.toUpperCase().includes("OPTION")) {
+    // Check if it's an optional course first
+    if (p.group && p.group.toUpperCase().includes("OPTION")) {
       const module = p.module || "Cours sans nom";
       const staff = p.staff || "";
       const id = `${module}|||${staff}`;
@@ -266,18 +284,48 @@ function extractFilterOptions(events) {
       }
       optionEvents[id].events.push(event);
     }
+    // Check if it has a group (any group, not just 1 and 2)
+    else if (p.group) {
+      const groupId = p.group;
+      if (!groupEvents[groupId]) {
+        groupEvents[groupId] = { events: [], courses: {} };
+      }
+      groupEvents[groupId].events.push(event);
+
+      // Track courses within this group
+      const module = p.module || "Cours sans nom";
+      const staff = p.staff || "";
+      const courseId = `${module}|||${staff}`;
+      if (!groupEvents[groupId].courses[courseId]) {
+        groupEvents[groupId].courses[courseId] = { module, staff, count: 0 };
+      }
+      groupEvents[groupId].courses[courseId].count++;
+    }
     // Tronc commun: no group, no option
     else {
       troncCommunEvents.push(event);
     }
   });
 
-  // Build groups array with counts
-  const groups = VALID_GROUPS.filter((g) => groupEvents[g]).map((g) => ({
-    id: g,
-    label: `Groupe ${g}`,
-    count: groupEvents[g].length,
-  }));
+  // Build groups array with courses
+  const groups = Object.entries(groupEvents)
+    .map(([groupId, data]) => ({
+      id: groupId,
+      label: `Groupe ${groupId}`,
+      count: data.events.length,
+      courses: Object.entries(data.courses)
+        .map(([courseId, courseData]) => ({
+          id: `${groupId}|||${courseId}`,
+          module: courseData.module,
+          staff: courseData.staff,
+          label: courseData.staff
+            ? `${courseData.module} (${courseData.staff})`
+            : courseData.module,
+          count: courseData.count,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label)),
+    }))
+    .sort((a, b) => a.id.localeCompare(b.id));
 
   // Build options array with counts
   const options = Object.entries(optionEvents)
@@ -307,14 +355,14 @@ function extractFilterOptions(events) {
 
 /**
  * Filter selection dialog with dynamic recap
- * @param {Object} options - { groups, options }
+ * @param {Object} options - { groups, options, troncCommun }
  * @param {number} totalCount - Total event count
  * @param {Array} allEvents - All parsed events for recap
- * @returns {Promise<{groups: string[], optionIds: string[]}>}
+ * @returns {Promise<{groupCourseIds: string[], optionIds: string[], troncCommunModules: string[]}>}
  */
 function showFilterDialog(options, totalCount, allEvents) {
   // Helper to get filtered events based on current selection
-  function getFilteredEvents(selectedGroups, selectedOptionIds) {
+  function getFilteredEvents(selectedGroupCourseIds, selectedOptionIds, selectedTroncCommun) {
     return allEvents.filter((event) => {
       const p = event.parsed;
       const isOption = p.group && p.group.toUpperCase().includes("OPTION");
@@ -324,11 +372,16 @@ function showFilterDialog(options, totalCount, allEvents) {
         const staff = p.staff || "";
         const id = `${module}|||${staff}`;
         return selectedOptionIds.includes(id);
-      } else if (p.group && ["1", "2"].includes(p.group)) {
-        return selectedGroups.includes(p.group);
+      } else if (p.group) {
+        // Check if this specific course in this group is selected
+        const module = p.module || "Cours sans nom";
+        const staff = p.staff || "";
+        const courseId = `${p.group}|||${module}|||${staff}`;
+        return selectedGroupCourseIds.includes(courseId);
       }
-      // Events without group/option are always included
-      return true;
+      // Tronc commun: filter by module
+      const module = p.module || "Autre";
+      return selectedTroncCommun.includes(module);
     });
   }
 
@@ -373,21 +426,39 @@ function showFilterDialog(options, totalCount, allEvents) {
     return html;
   }
 
-  let body = `<div class="${PREFIX}-info">📊 ${totalCount} événements trouvés. Sélectionne ce que tu veux exporter.</div>`;
+  let body = `<div class="${PREFIX}-info">📊 ${totalCount} cours trouvés. Sélectionne ceux que tu veux exporter.</div>`;
 
-  // Groups section
+  // Groups section with nested courses (accordion)
   if (options.groups.length > 0) {
     body += `
       <div class="${PREFIX}-section">
-        <div class="${PREFIX}-section-title">👥 Mon groupe</div>
+        <div class="${PREFIX}-section-title">👥 Groupes</div>
         <div class="${PREFIX}-checkbox-list">
           ${options.groups
             .map(
               (g) => `
-            <label class="${PREFIX}-checkbox-item">
-              <input type="checkbox" name="group" value="${escapeHtml(g.id)}" checked>
-              ${escapeHtml(g.label)} - ${g.count} cours
-            </label>
+            <div class="${PREFIX}-group-container" data-group-id="${escapeHtml(g.id)}">
+              <div class="${PREFIX}-accordion-toggle" data-accordion="${escapeHtml(g.id)}">
+                <label class="${PREFIX}-checkbox-item" style="font-weight: 600; flex: 1;" onclick="event.stopPropagation()">
+                  <input type="checkbox" name="groupParent" value="${escapeHtml(g.id)}" checked>
+                  ${escapeHtml(g.label)} - ${g.count} cours (${g.courses.length} matières)
+                </label>
+              </div>
+              <div class="${PREFIX}-accordion-content" data-accordion-content="${escapeHtml(g.id)}">
+                ${g.courses
+                  .map(
+                    (course) => `
+                  <label class="${PREFIX}-checkbox-item" style="font-size: 12px;">
+                    <input type="checkbox" name="groupCourse" value="${escapeHtml(
+                      course.id
+                    )}" data-parent="${escapeHtml(g.id)}" checked>
+                    ${escapeHtml(course.label)} - ${course.count} cours
+                  </label>
+                `
+                  )
+                  .join("")}
+              </div>
+            </div>
           `
             )
             .join("")}
@@ -417,20 +488,19 @@ function showFilterDialog(options, totalCount, allEvents) {
     `;
   }
 
-  // Tronc commun section (informational, always included)
+  // Tronc commun section (with checkboxes, all checked by default)
   if (options.troncCommun && options.troncCommun.length > 0) {
     body += `
       <div class="${PREFIX}-section">
-        <div class="${PREFIX}-section-title">📖 Tronc commun - ${
-      options.troncCommunCount
-    } cours</div>
-        <div class="${PREFIX}-checkbox-list" style="background: #f0f7ff; border-color: #c4dff7;">
+        <div class="${PREFIX}-section-title">📖 Tronc commun</div>
+        <div class="${PREFIX}-checkbox-list">
           ${options.troncCommun
             .map(
               (tc) => `
-            <div style="padding: 4px 0; font-size: 13px;">
-              📘 ${escapeHtml(tc.module)} - ${tc.count} cours
-            </div>
+            <label class="${PREFIX}-checkbox-item">
+              <input type="checkbox" name="troncCommun" value="${escapeHtml(tc.module)}" checked>
+              ${escapeHtml(tc.module)} - ${tc.count} cours
+            </label>
           `
             )
             .join("")}
@@ -439,17 +509,22 @@ function showFilterDialog(options, totalCount, allEvents) {
     `;
   }
 
-  // Recap section
-  const initialGroups = options.groups.map((g) => g.id);
+  // Recap section - collect all initial course IDs
+  const initialGroupCourseIds = options.groups.flatMap((g) => g.courses.map((c) => c.id));
   const initialOptions = options.options.map((o) => o.id);
-  const initialFiltered = getFilteredEvents(initialGroups, initialOptions);
+  const initialTroncCommun = options.troncCommun.map((tc) => tc.module);
+  const initialFiltered = getFilteredEvents(
+    initialGroupCourseIds,
+    initialOptions,
+    initialTroncCommun
+  );
 
   body += `
     <div class="${PREFIX}-section">
       <div class="${PREFIX}-section-title">📋 Récap : <span id="${PREFIX}-recap-count">${
     initialFiltered.length
   }</span> cours à exporter</div>
-      <div id="${PREFIX}-recap" class="${PREFIX}-checkbox-list" style="max-height: 200px; font-size: 13px;">
+      <div id="${PREFIX}-recap" class="${PREFIX}-checkbox-list ${PREFIX}-checkbox-list-scrollable" style="font-size: 13px;">
         ${buildRecapHtml(initialFiltered)}
       </div>
     </div>
@@ -477,13 +552,20 @@ function showFilterDialog(options, totalCount, allEvents) {
 
     // Update recap when checkboxes change
     function updateRecap() {
-      const selectedGroups = [...dialog.querySelectorAll('input[name="group"]:checked')].map(
-        (cb) => cb.value
-      );
+      const selectedGroupCourseIds = [
+        ...dialog.querySelectorAll('input[name="groupCourse"]:checked'),
+      ].map((cb) => cb.value);
       const selectedOptionIds = [...dialog.querySelectorAll('input[name="option"]:checked')].map(
         (cb) => cb.value
       );
-      const filtered = getFilteredEvents(selectedGroups, selectedOptionIds);
+      const selectedTroncCommun = [
+        ...dialog.querySelectorAll('input[name="troncCommun"]:checked'),
+      ].map((cb) => cb.value);
+      const filtered = getFilteredEvents(
+        selectedGroupCourseIds,
+        selectedOptionIds,
+        selectedTroncCommun
+      );
 
       const recapEl = dialog.querySelector(`#${PREFIX}-recap`);
       const countEl = dialog.querySelector(`#${PREFIX}-recap-count`);
@@ -491,9 +573,60 @@ function showFilterDialog(options, totalCount, allEvents) {
       if (countEl) countEl.textContent = filtered.length;
     }
 
-    // Add change listeners
-    dialog.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+    // Handle parent group checkbox toggling all children
+    dialog.querySelectorAll('input[name="groupParent"]').forEach((parentCb) => {
+      parentCb.addEventListener("change", (e) => {
+        const groupId = e.target.value;
+        const isChecked = e.target.checked;
+        dialog
+          .querySelectorAll(`input[name="groupCourse"][data-parent="${groupId}"]`)
+          .forEach((childCb) => {
+            childCb.checked = isChecked;
+          });
+        updateRecap();
+      });
+    });
+
+    // Handle child checkbox - update parent state
+    dialog.querySelectorAll('input[name="groupCourse"]').forEach((childCb) => {
+      childCb.addEventListener("change", (e) => {
+        const groupId = e.target.dataset.parent;
+        const allChildren = dialog.querySelectorAll(
+          `input[name="groupCourse"][data-parent="${groupId}"]`
+        );
+        const checkedChildren = dialog.querySelectorAll(
+          `input[name="groupCourse"][data-parent="${groupId}"]:checked`
+        );
+        const parentCb = dialog.querySelector(`input[name="groupParent"][value="${groupId}"]`);
+
+        if (parentCb) {
+          parentCb.checked = checkedChildren.length > 0;
+          parentCb.indeterminate =
+            checkedChildren.length > 0 && checkedChildren.length < allChildren.length;
+        }
+        updateRecap();
+      });
+    });
+
+    // Add change listeners for other checkboxes
+    dialog.querySelectorAll('input[name="option"], input[name="troncCommun"]').forEach((cb) => {
       cb.addEventListener("change", updateRecap);
+    });
+
+    // Handle accordion toggle
+    dialog.querySelectorAll(`.${PREFIX}-accordion-toggle`).forEach((toggle) => {
+      toggle.addEventListener("click", (e) => {
+        // Don't toggle if clicking on the checkbox itself
+        if (e.target.tagName === "INPUT") return;
+
+        const groupId = toggle.dataset.accordion;
+        const content = dialog.querySelector(`[data-accordion-content="${groupId}"]`);
+
+        toggle.classList.toggle(`${PREFIX}-open`);
+        if (content) {
+          content.classList.toggle(`${PREFIX}-open`);
+        }
+      });
     });
 
     function cleanup() {
@@ -507,14 +640,21 @@ function showFilterDialog(options, totalCount, allEvents) {
         cleanup();
         reject(new Error("cancelled"));
       } else if (action === "confirm") {
-        const selectedGroups = [...dialog.querySelectorAll('input[name="group"]:checked')].map(
-          (cb) => cb.value
-        );
+        const selectedGroupCourseIds = [
+          ...dialog.querySelectorAll('input[name="groupCourse"]:checked'),
+        ].map((cb) => cb.value);
         const selectedOptionIds = [...dialog.querySelectorAll('input[name="option"]:checked')].map(
           (cb) => cb.value
         );
+        const selectedTroncCommun = [
+          ...dialog.querySelectorAll('input[name="troncCommun"]:checked'),
+        ].map((cb) => cb.value);
         cleanup();
-        resolve({ groups: selectedGroups, optionIds: selectedOptionIds });
+        resolve({
+          groupCourseIds: selectedGroupCourseIds,
+          optionIds: selectedOptionIds,
+          troncCommunModules: selectedTroncCommun,
+        });
       }
     });
 
@@ -528,7 +668,7 @@ function showFilterDialog(options, totalCount, allEvents) {
 /**
  * Filters events based on user selection
  * @param {Array} events - Events with parsed property
- * @param {Object} filters - { groups, optionIds }
+ * @param {Object} filters - { groupCourseIds, optionIds, troncCommunModules }
  * @returns {Array} Filtered events
  */
 function filterEvents(events, filters) {
@@ -546,13 +686,17 @@ function filterEvents(events, filters) {
       const included = filters.optionIds?.includes(id) ?? true;
       return included;
     } else if (p.group) {
-      // Regular group - check if selected
-      const included = filters.groups?.includes(p.group) ?? true;
+      // Check if this specific course in this group is selected
+      const module = p.module || "Cours sans nom";
+      const staff = p.staff || "";
+      const courseId = `${p.group}|||${module}|||${staff}`;
+      const included = filters.groupCourseIds?.includes(courseId) ?? true;
       return included;
     }
 
-    // No group info - include by default (meetings, etc.)
-    return true;
+    // Tronc commun - filter by module
+    const module = p.module || "Autre";
+    return filters.troncCommunModules?.includes(module) ?? true;
   });
 }
 
